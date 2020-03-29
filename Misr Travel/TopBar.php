@@ -4,9 +4,19 @@ if(!isset($_SESSION))
    {
        session_start();
    }
-include("css/TopBar.css")
+include("css/TopBar.css");
 ?>
 
+<style type="text/css">
+
+
+  .login-components{
+    position: relative;
+      left: 70%;
+
+
+  }
+</style>
 
 <nav >
   <a class="responsive-menu" href="#"><i class="fa fa-reorder"></i> Menu</a>
@@ -30,27 +40,15 @@ include("css/TopBar.css")
       </li>
       <li><a href="">Inquire Now</a></li>
       <li><a href="">Contact Us</a></li>
-      <?php
-
-          if(!empty($_SESSION['FullName']) && $_SESSION["Status"]=="Tourist"||1==1)
-          {
-
-              echo "<li><a href=''>Booked Package</a></li>";
-              echo "<li><a href=''>Account Settings</a></li>";
-              echo "<li><a href='tourist.php'>Packages</a></li>";
-              echo "<li><a href='logout.php'>Log Out</a></li>";
-
-
-
-          }
-          else
-            {
-
-            echo"<li><a href='#'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>";
-            echo "<li><a href='SignUp.php'>Sign Up</a></li>";
-
-            }
-
-       ?>
-    </ul>
+    
+    <li><div class="login-components">
+    <form action="" method="post">
+    <input type="text" placeholder="Email" name="email" class="box" required>
+    <input type="password" placeholder="Password" name="password" class="box" required>
+    <input type="submit" value="Login" class="button" name="login">
+  </form>
+  </div>
+  </li>
+    
+  </ul>
   </nav>
