@@ -32,13 +32,24 @@ include("css/TopBar.css")
       <li><a href="">Contact Us</a></li>
       <?php
 
-          if(!empty($_SESSION['FullName']) && $_SESSION["Status"]=="Client")
+          if(!empty($_SESSION['FullName']) && $_SESSION["Status"]=="Tourist"||1==1)
           {
 
               echo "<li><a href=''>Booked Package</a></li>";
               echo "<li><a href=''>Account Settings</a></li>";
+              echo "<li><a href='tourist.php'>Packages</a></li>";
+              echo "<li><a href='logout.php'>Log Out</a></li>";
+
+
 
           }
+          else
+            {
+
+            echo"<li><a href='#'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>";
+            echo "<li><a href='SignUp.php'>Sign Up</a></li>";
+
+            }
 
        ?>
     </ul>

@@ -155,7 +155,6 @@
         <img src="Slideshow/w.jpg" alt="Norway" style="width:100%">
         <div class="w3-container w3-white">
           <h3>Single Room</h3>
-          <h6 class="w3-opacity">From $99</h6>
           <p>Description</p>
           <button class="w3-button w3-block w3-black w3-margin-bottom" onclick="book()">Read More</button>
         </div>
@@ -165,7 +164,6 @@
         <img src="Slideshow/x.jpg" alt="Norway" style="width:100%">
         <div class="w3-container w3-white">
           <h3>Double Room</h3>
-          <h6 class="w3-opacity">From $149</h6>
           <p>Description</p>
 
           <button class="w3-button w3-block w3-black w3-margin-bottom">Read More</button>
@@ -176,7 +174,6 @@
         <img src="Slideshow/y.jpg" alt="Norway" style="width:100%">
         <div class="w3-container w3-white">
           <h3>Deluxe Room</h3>
-          <h6 class="w3-opacity">From $199</h6>
           <p>Description</p>
           <button class="w3-button w3-block w3-black w3-margin-bottom">Read More</button>
         </div>
