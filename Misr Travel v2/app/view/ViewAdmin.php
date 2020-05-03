@@ -2,7 +2,7 @@
 
 require_once(__ROOT__ . "view/View.php");
 
-class ViewUser extends View{
+class ViewAdmin extends View{
 	public function output($ss=""){
 		$str="";
     $str.='<body>
