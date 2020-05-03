@@ -13,7 +13,7 @@ class ViewPackage extends View{
 		$str.="<h2><b>4 Good Reasons<br>For travelling with us</b></h2>";
 		$str.="</div></div><br><br>";
 
-																																								//3 Buttons
+																																								//2 Buttons
 
 		$str.="<table>";
 

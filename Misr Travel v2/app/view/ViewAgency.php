@@ -2,7 +2,7 @@
 
 require_once(__ROOT__ . "view/View.php");
 class ViewAgency extends View{
-	public function output($ss=""){
+	public function output($ss=""){			//$ss=Profile() to make it default
 		$str = "";
     $str='<body>
   	<div class="rectangle">
@@ -32,7 +32,7 @@ class ViewAgency extends View{
         $str.=$ss;
         $ss="";
       }
-      $str.='</body>';
+      $str.='</div></body>';
     return $str;
   }
 
