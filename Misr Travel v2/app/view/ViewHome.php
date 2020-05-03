@@ -2,7 +2,7 @@
 
 require_once(__ROOT__ . "view/View.php");
 
-class ViewUser extends View{
+class ViewHome extends View{
 	public function output($ss=""){
 		$str="";
     $str.='<div id="myCarousel" class="carousel slide" data-ride="carousel">    <!-- carousel -->
