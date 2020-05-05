@@ -44,7 +44,7 @@ class Requests extends Model {
         return false;
     }
   }
-  function insertPackage($name,$checkin,$checkout,$hotel,$program,$price){
+  function insertRequest($name,$checkin,$checkout,$hotel,$program,$price){
     $sql = "INSERT INTO packages (AgencyID,Name,Checkin,Checkout,Hotel_ID,Program,Price,Status) VALUES ('".$_SESSION['ID']."','$name','$checkin','$checkout','$hotel->getID()','$program','$price','Pending confirmation')";
     if($this->db->query($sql) === true){
       echo "Record inserted successfully.";
