@@ -43,8 +43,8 @@ class DBh{
 	}
 
 	function fetchRow($result=""){
-		if (empty($result)){
-			$result = $this->result;
+		if (empty($result)){ 
+			$result = $this->result; 
 		}
 		return $result->fetch_assoc();
 	}
