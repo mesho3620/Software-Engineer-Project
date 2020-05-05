@@ -12,7 +12,7 @@ class Package extends Model {
     private $program;
     private $price;
 
-  function __construct($id,$name="",$checkin="",$checkout="",$hotel=new Hotel(),$program="",$price="",) {
+  function __construct($id,$name="",$checkin="",$checkout="",$hotel=new Hotel(),$program="",$price="") {
     $this->id = $id;
 	  $this->db = $this->connect();
 
