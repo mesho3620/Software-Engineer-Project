@@ -87,7 +87,7 @@ class ViewHome extends View{
 $str.='<div class="row">
 ';
 
-foreach ($this->model->getPackages as $Package)
+foreach ($this->controller->GetPackages() as $Package)
 {
 
 	$str.='<div class="col-md-4">
@@ -103,15 +103,14 @@ foreach ($this->model->getPackages as $Package)
 					</p>
 					<p>'.$Package->getPrice().'</p>
 
-				<form action="home.php?action=viewPackage" method="post">
-					<div style="display:none;""><input name=selectedPackage" value="'.$Package->getID().'"/></div>
+				<form action="Tourist.php?action=viewPackage" method="post">
+					<div style="display:none;"><input name="SelectedPackage" value="'.$Package->getID().'"/></div>
 					<input type="submit" class="w3-button w3-block w3-black w3-margin-bottom" value="Read More">
 				 </form>
 
         </div>
       </div>
     </div>';
-
 
 }
 

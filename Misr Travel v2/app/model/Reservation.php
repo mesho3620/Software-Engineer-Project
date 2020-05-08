@@ -9,7 +9,7 @@ class Reservation extends Model {
     private $touristId;
     private $package;
 
-    function __construct($id,$touristId="",$package=new Package()) {
+    function __construct($id,$touristId="",$package="") {
 	    $this->id = $id;
 		$this->db = $this->connect();
 
@@ -53,11 +53,11 @@ class Reservation extends Model {
 	    $sql="delete from reservations where ID=$this->id;";
 	    if($this->db->query($sql) === true){
             echo "deleted successfully.";
-        } 
+        }
 	    else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
         }
 	}
 }
-	
+
 ?>
