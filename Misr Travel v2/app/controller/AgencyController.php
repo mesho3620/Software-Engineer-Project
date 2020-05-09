@@ -16,9 +16,10 @@ class AgencyController{
 		$hotel = $_REQUEST['hotel'];
 		$program = $_REQUEST['program'];
 		$price = $_REQUEST['price'];
+		$touristsno = $_REQUEST['touristsno'];
 		$status = $_REQUEST['status'];
 
-		$this->requestmodel->getRequest($_REQUEST['id'])->insertRequest($name,$checkin,$checkout,$hotel,$program,$price);
+		$this->requestmodel->getRequest($_REQUEST['id'])->insertRequest($name,$checkin,$checkout,$hotel,$program,$touristsno,$price);
 	}
 
 	public function editRequest() {
@@ -28,9 +29,10 @@ class AgencyController{
 		$hotel = $_REQUEST['hotel'];
 		$program = $_REQUEST['program'];
 		$price = $_REQUEST['price'];
+		$touristsno = $_REQUEST['touristsno'];
 		$status = $_REQUEST['status'];
 
-		$this->requestmodel->getRequest($_REQUEST['id'])->editRequest($name,$checkin,$checkout,$hotel,$program,$price,$status);
+		$this->requestmodel->getRequest($_REQUEST['id'])->editRequest($name,$checkin,$checkout,$hotel,$program,$price,$touristsno,$status);
 	}
 	
 	public function deleteRequest(){

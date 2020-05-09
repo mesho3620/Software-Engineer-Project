@@ -12,7 +12,7 @@ class AdminController{
 	protected $reservationmodel;
 	protected $hotelmodel;
     
-    public function __construct($touristmodel,$agencymodel,$staffmodel,$departmentmodel,$packagemodel,$requestmodel,$reservationmodel,$hotelmodel,) {
+    public function __construct($touristmodel,$agencymodel,$staffmodel,$departmentmodel,$packagemodel,$requestmodel,$reservationmodel,$hotelmodel) {
         $this->touristmodel = $touristmodel;
         $this->agencymodel = $agencymodel;
         $this->staffmodel = $staffmodel;
@@ -114,9 +114,10 @@ class AdminController{
 		$hotel = $_REQUEST['hotel'];
 		$program = $_REQUEST['program'];
 		$price = $_REQUEST['price'];
+		$touristsno = $_REQUEST['touristsno'];
 		$status = $_REQUEST['status'];
 
-		$this->requestmodel->getRequest($_REQUEST['id'])->editRequest($name,$checkin,$checkout,$hotel,$program,$price,$status);
+		$this->requestmodel->getRequest($_REQUEST['id'])->editRequest($name,$checkin,$checkout,$hotel,$program,$price,$touristsno,$status);
 	}
 	
 	public function deleteRequest(){
