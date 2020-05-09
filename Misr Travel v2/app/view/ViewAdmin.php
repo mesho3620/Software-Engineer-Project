@@ -3,48 +3,58 @@
 require_once(__ROOT__ . "view/View.php");
 
 class ViewAdmin extends View{
-	public function output($ss=""){
-		$str="";
-    $str.='<body>
 
-	<div class="rectangle">
-	 <div class="sidenav">
+  protected $touristmodel;
+  protected $agencymodel;
+  protected $staffmodel;
+  protected $departmentmodel;
+  protected $packagemodel;
+  protected $requestmodel;
+  protected $reservationmodel;
+  protected $hotelmodel;
+
+  public function __construct($controller,$touristmodel,$agencymodel,$staffmodel,$departmentmodel,$packagemodel,$requestmodel,$reservationmodel,$hotelmodel) {
+        $this->controller = $controller;
+        $this->touristmodel = $touristmodel;
+        $this->agencymodel = $agencymodel;
+        $this->staffmodel = $staffmodel;
+        $this->departmentmodel = $departmentmodel;
+        $this->packagemodel = $packagemodel;
+        $this->requestmodel = $requestmodel;
+        $this->reservationmodel = $reservationmodel;
+        $this->hotelmodel = $hotelmodel;
+    }
+  private $str="";
+  protected $str2='<body>
+  	<div class="rectangle">
+	  <div class="sidenav">
 	  <img src="img1.png" class="logo">
-
 	  <br><br><br>
-	  <a href="Admin.php?action=showTourists">Tourists</a>
+	  <a href="Admin.php?action=ViewTourists">Tourists</a>
 	  <br><br>
-	  <a href="Admin.php?action=showAgencies">Agencies</a>
+	  <a href="Admin.php?action=ViewAgencies">Agencies</a>
 	  <br><br>
-	  <a href="Admin.php?action=showRequests">Requests</a>
+	  <a href="Admin.php?action=ViewRequests">Requests</a>
 	  <br><br>
-	  <a href="Admin.php?action=showPackages">Packages</a>
+	  <a href="Admin.php?action=ViewPackages">Packages</a>
 	  <br><br>
-	  <a href="Admin.php?action=showReservations>Reservations</a>
+	  <a href="Admin.php?action=ViewReservations">Reservations</a>
 	  <br><br>
-	  <a href="Admin.php?action=showStaff">Staff</a>
+	  <a href="Admin.php?action=ViewStaff">Staff</a>
 	  <br><br>
-	  <a href="Admin.php?action=showDepartments">Departments</a>
+	  <a href="Admin.php?action=ViewDepartments">Departments</a>
 	  <br><br>
+    <a href="Admin.php?action=ViewHotels">Hotels</a>
+    <br><br>
 	  <br>
 	  <a href="Admin.php?action=logout">Log Out   <span class="glyphicon glyphicon-log-out" ></span></a>
-
 	  </div>';
-    if($ss!="")
-    {
-      $str.=$ss;
-      $ss="";
-    }
-    $str.='</div></body>';
-		return $str;
-	}
 
 	function showTourists(){
-		$str='<div class="DataTable" style="overflow:auto;" id="Tourists">  <!-- Tourists block -->
-
+		$this->str.='<div class="DataTable" style="overflow:auto;">
     			<table class="table table-striped table-hover">
     			<thead>
-    		 <tr>
+    		  <tr>
     			<th>Name</th>
     			<th>Email</th>
     			<th>Mobile</th>
@@ -53,28 +63,27 @@ class ViewAdmin extends View{
     			<th>Action</th>
           </tr>';
 
-          foreach ($this->model->getTourists() as $Tourist)
+          foreach ($this->touristmodel->getTourists() as $Tourist)
           {
 
-            $str.='<tr>';
-            $str.='<td>'.$Tourist->getName().'</td>';
-            $str.='<td>'.$Tourist->getEmail().'</td>';
-            $str.='<td>'.$Tourist->getMobile().'</td>';
-            $str.='<td>'.$Tourist->getNationality().'</td>';
-            $str.='<td>'.$Tourist->getPassportNo().'</td>';
-            $str.='<td>'.$Tourist->getAction().'</td>';
-            $str.='</tr>';
+            $this->str.='<tr>';
+            $this->str.='<td>'.$Tourist->getName().'</td>';
+            $this->str.='<td>'.$Tourist->getEmail().'</td>';
+            $this->str.='<td>'.$Tourist->getMobile().'</td>';
+            $this->str.='<td>'.$Tourist->getNationality().'</td>';
+            $this->str.='<td>'.$Tourist->getPassport_Number().'</td>';
+            $this->str.='</tr>';
 
           }
 
-    		  $str.='</table>
-    		  </div>';
-		return $str;
+    		  $this->str.='</table>
+    		  </div></div>';
+          return $this->str2.$this->str;
+
 	}
 
 	function showAgencies(){
-		$str='<div class="DataTable" style="overflow:auto;" id="Agencies">  <!-- Agencies block -->
-
+		$this->str='<div class="DataTable" style="overflow:auto;">
 			<table class="table table-striped table-hover">
 			<thead>
 		 <tr>
@@ -86,28 +95,26 @@ class ViewAdmin extends View{
 			<th>Action</th>
     </tr>';
 
-      foreach ($this->model->getAgencies() as $Agency)
+      foreach ($this->agencymodel->getAgencies() as $Agency)
       {
 
-        $str.='<tr>';
-        $str.='<td>'.$Agency->getName().'</td>';
-        $str.='<td>'.$Agency->getEmail().'</td>';
-        $str.='<td>'.$Agency->getMobile().'</td>';
-        $str.='<td>'.$Agency->getCountry().'</td>';
-        $str.='<td>'.$Agency->getAddress().'</td>';
-        $str.='<td>'.$Agency->getAction().'</td>';
-        $str.='</tr>';
+        $this->str.='<tr>';
+        $this->str.='<td>'.$Agency->getName().'</td>';
+        $this->str.='<td>'.$Agency->getEmail().'</td>';
+        $this->str.='<td>'.$Agency->getMobile().'</td>';
+        $this->str.='<td>'.$Agency->getCountry().'</td>';
+        $this->str.='<td>'.$Agency->getAddress().'</td>';
+        $this->str.='</tr>';
 
       }
 
-		$str.='</table>
-		</div>';
-		return $str;
+		$this->str.='</table>
+          </div></div>';
+          return $this->str2.$this->str;
 	}
 
 	public function showRequests(){
-		$str='<div class="DataTable" style="overflow:auto;" id="Requests">  <!-- Requests block -->
-
+		$this->str='<div class="DataTable" style="overflow:auto;">
 			<table class="table table-striped table-hover">
 			<thead>
 		 <tr>
@@ -116,34 +123,35 @@ class ViewAdmin extends View{
 			<th>Tourists No.</th>
 			<th>Check-in</th>
 			<th>Check-out</th>
+      <th>Price</th>
 			<th>Status</th>
 			<th>Action</th>
     </tr>';
 
-    foreach ($this->model->getRequests() as $Request)
+    foreach ($this->requestmodel->getRequests() as $Request)
     {
 
-      $str.='<tr>';
-      $str.='<td>'.$Request->getID().'</td>';
-      $str.='<td>'.$Request->getAgency().'</td>';
-      $str.='<td>'.$Request->getTouristsNo().'</td>';
-      $str.='<td>'.$Request->getCheckin().'</td>';
-      $str.='<td>'.$Request->getCheckout().'</td>';
-      $str.='<td>'.$Request->getStatus().'</td>';
-      $str.='<td>'.$Request->getAction().'</td>';
-      $str.='</tr>';
+      $this->str.='<tr>';
+      $this->str.='<td>'.$Request->getID().'</td>';
+      $this->str.='<td>'.$Request->getAgencyId().'</td>';
+      $this->str.='<td>'.$Request->getTouristsNo().'</td>';
+      $this->str.='<td>'.$Request->getCheckin().'</td>';
+      $this->str.='<td>'.$Request->getCheckout().'</td>';
+      $this->str.='<td>'.$Request->getPrice().'</td>';
+      $this->str.='<td>'.$Request->getStatus().'</td>';
+      $this->str.='</tr>';
+      
 
 
     }
 
-    $str.='</table>
-		</div>';
-		return $str;
+    $this->str.='</table>
+          </div></div>';
+          return $this->str2.$this->str;
 	}
 
   function showPackages(){
-    $str='<div class="DataTable" style="overflow:auto;" id="Packages">  <!-- Packages block -->
-
+    $this->str='<div class="DataTable" style="overflow:auto;" id="Packages">  <!-- Packages block -->
 			<table class="table table-striped table-hover">
 			<thead>
 		 <tr>
@@ -151,64 +159,59 @@ class ViewAdmin extends View{
 			<th>Name</th>
 			<th>Check-in</th>
 			<th>Check-out</th>
-			<th>Status</th>
+      <th>Price</th>
 			<th>Action</th>
     </tr>';
 
-      foreach ($this->model->getPackagess() as $Package)
+      foreach ($this->packagemodel->getPackages() as $Package)
       {
 
-        $str.='<tr>';
-        $str.='<td>'.$Package->getID().'</td>';
-        $str.='<td>'.$Package->getName().'</td>';
-        $str.='<td>'.$Package->getCheckin().'</td>';
-        $str.='<td>'.$Package->getCheckout().'</td>';
-        $str.='<td>'.$Package->getStatus().'</td>';
-        $str.='<td>'.$Package->getAction().'</td>';
-        $str.='</tr>';
+        $this->str.='<tr>';
+        $this->str.='<td>'.$Package->getID().'</td>';
+        $this->str.='<td>'.$Package->getName().'</td>';
+        $this->str.='<td>'.$Package->getCheckin().'</td>';
+        $this->str.='<td>'.$Package->getCheckout().'</td>';
+        $this->str.='<td>'.$Package->getPrice().'</td>';
+        $this->str.='</tr>';
 
       }
 
-    $str.='</table>
-    </div>';
-    return $str;
+    $this->str.='</table>
+          </div></div>';
+          return $this->str2.$this->str;
   }
 
   function showReservations(){
-    $str='<div class="DataTable" style="overflow:auto;" id="Reservations">  <!-- Reservations block -->
-
+    $this->str='<div class="DataTable" style="overflow:auto;">
 			<table class="table table-striped table-hover">
 			<thead>
 		 <tr>
 			<th>ID</th>
 			<th>Tourist</th>
 			<th>Package</th>
-			<th>Date</th>
-			<th>Status</th>
+			<th>Check-in</th>
 			<th>Action</th>
     </tr>';
 
-      foreach ($this->model->getReservations() as $Reservation)
+      foreach ($this->reservationmodel->getReservations() as $Reservation)
       {
 
-        $str.='<tr>';
-        $str.='<td>'.$Reservation->getID().'</td>';
-        $str.='<td>'.$Reservation->getTourist().'</td>';
-        $str.='<td>'.$Reservation->getPackage().'</td>';
-        $str.='<td>'.$Reservation->getDate().'</td>';
-        $str.='<td>'.$Reservation->getStatus().'</td>';
-        $str.='<td>'.$Reservation->getAction().'</td>';
-        $str.='</tr>';
+        $this->str.='<tr>';
+        $this->str.='<td>'.$Reservation->getID().'</td>';
+        $this->str.='<td>'.$Reservation->getTouristId().'</td>';
+        $this->str.='<td>'.$Reservation->getPackage()->getName().'</td>';
+        $this->str.='<td>'.$Reservation->getPackage()->getCheckin().'</td>';
+        $this->str.='</tr>';
 
       }
 
-    $str.='</table>
-    </div>';
-    return $str;
+    $this->str.='</table>
+          </div></div>';
+          return $this->str2.$this->str;
   }
 
   function showStaff(){
-    $str='<div class="DataTable" style="overflow:auto;" id="Staff">  <!-- Staff block -->
+    $this->str='<div class="DataTable" style="overflow:auto;" id="Staff">
 			<span class="pull-left" style="padding-left:5%;padding-top:1%;padding-bottom:1%;"><a href="#addStaff" data-toggle="modal" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add Staff</a></span>
 			<table class="table table-striped table-hover">
 			<thead>
@@ -220,26 +223,25 @@ class ViewAdmin extends View{
 			<th>Action</th>
     </tr>';
 
-      foreach ($this->model->getStaff() as $Staff)
+      foreach ($this->staffmodel->getStaff() as $Staff)
       {
 
-        $str.='<tr>';
-        $str.='<td>'.$Staff->getName().'</td>';
-        $str.='<td>'.$Staff->getEmail().'</td>';
-        $str.='<td>'.$Staff->getMobile().'</td>';
-        $str.='<td>'.$Staff->getDepartment().'</td>';
-        $str.='<td>'.$Staff->getAction().'</td>';
-        $str.='</tr>';
+        $this->str.='<tr>';
+        $this->str.='<td>'.$Staff->getName().'</td>';
+        $this->str.='<td>'.$Staff->getEmail().'</td>';
+        $this->str.='<td>'.$Staff->getMobile().'</td>';
+        $this->str.='<td>'.$Staff->getDepartmentId().'</td>';
+        $this->str.='</tr>';
 
       }
 
-    $str.='</table>
-    </div>';
-    return $str;
+    $this->str.='</table>
+          </div></div>';
+          return $this->str2.$this->str;
   }
 
   function showDepartments(){
-    $str='<div class="DataTable" style="overflow:auto;" id="Departments">  <!-- Departments block -->
+    $this->str='<div class="DataTable" style="overflow:auto;" id="Departments">  <!-- Departments block -->
 			<span class="pull-left" style="padding-left:5%;padding-top:1%;padding-bottom:1%;"><a href="#addDep" data-toggle="modal" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add Department</a></span>
 			<table class="table table-striped table-hover">
 			<thead>
@@ -250,21 +252,48 @@ class ViewAdmin extends View{
 			<th>Action</th>
     </tr>';
 
-      foreach ($this->model->getDepartments() as $Department)
+      foreach ($this->departmentmodel->getDepartments() as $Department)
       {
 
-        $str.='<tr>';
-        $str.='<td>'.$Department->getID().'</td>';
-        $str.='<td>'.$Department->getName().'</td>';
-        $str.='<td>'.$Department->getStaff().'</td>';
-        $str.='<td>'.$Department->getAction().'</td>';
-        $str.='</tr>';
+        $this->str.='<tr>';
+        $this->str.='<td>'.$Department->getID().'</td>';
+        $this->str.='<td>'.$Department->getName().'</td>';
+        $this->str.='</tr>';
 
       }
 
-    $str.='</table>
-    </div>';
-    return $str;
+    $this->str.='</table>
+          </div></div>';
+          return $this->str2.$this->str;
+  }
+  function showHotels(){
+    $this->str='<div class="DataTable" style="overflow:auto;" id="Departments">  <!-- Departments block -->
+      <span class="pull-left" style="padding-left:5%;padding-top:1%;padding-bottom:1%;"><a href="#addDep" data-toggle="modal" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add Department</a></span>
+      <table class="table table-striped table-hover">
+      <thead>
+     <tr>
+      <th>ID</th>
+      <th>City</th>
+      <th>Location</th>
+      <th>Rating</th>
+      <th>Action</th>
+    </tr>';
+
+      foreach ($this->hotelmodel->getHotels() as $Hotel)
+      {
+
+        $this->str.='<tr>';
+        $this->str.='<td>'.$Hotel->getID().'</td>';
+        $this->str.='<td>'.$Hotel->getCity().'</td>';
+        $this->str.='<td>'.$Hotel->getLocation().'</td>';
+        $this->str.='<td>'.$Hotel->getRating().'</td>';
+        $this->str.='</tr>';
+
+      }
+
+    $this->str.='</table>
+          </div></div>';
+          return $this->str2.$this->str;
   }
 }
 ?>
