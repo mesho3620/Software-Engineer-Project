@@ -58,13 +58,9 @@ class Tourists extends Model {
 		if($this->db->query($sql) === true){
 			echo "Records inserted successfully.";
 			$this->fillArray();
-		} 
+		}
 		else{
 			echo "ERROR: Could not able to execute $sql. " . $conn->error;
 		}
 	}
 }
-
-
-
-

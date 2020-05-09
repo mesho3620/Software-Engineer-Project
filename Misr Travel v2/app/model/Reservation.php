@@ -53,11 +53,11 @@ class Reservation extends Model {
 	    $sql="delete from reservations where ID=$this->id;";
 	    if($this->db->query($sql) === true){
             echo "deleted successfully.";
-        } 
+        }
 	    else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
         }
 	}
 }
-	
+
 ?>

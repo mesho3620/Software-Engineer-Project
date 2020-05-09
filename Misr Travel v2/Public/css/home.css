@@ -1,0 +1,62 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+
+.carousel-inner img
+  {
+      width: 100%; /* Set width to 100% */
+      margin: auto;
+      min-height:200px;
+  }
+
+  /* Hide the carousel text when the screen is less than 600 pixels wide */
+  @media (max-width: 600px)
+  {
+    .carousel-caption {
+      display: none;
+    }
+  }
+
+  select
+  {
+    border: none;
+    height: 40px;
+    width: 80%;
+  }
+
+  .column
+  {
+    float: left;
+    padding: 10px;
+  }
+
+  .leftCol
+  {
+    width: 25%;
+  }
+
+  .Middle
+  {
+    width:25%
+  }
+
+  .rightCol {
+    width: 25%;
+  }
+
+  .row:after
+  {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  </style>
+</head>

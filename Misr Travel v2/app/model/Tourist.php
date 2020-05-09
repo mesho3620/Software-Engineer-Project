@@ -18,7 +18,7 @@ class Tourist extends User {
       $this->name = $name;
       $this->email = $email;
 	    $this->password=$password;
-      $this->mobile = $mobile;    
+      $this->mobile = $mobile;
 	    $this->nationality=$nationality;
       $this->passport_number = $passport_number;
     }
@@ -55,7 +55,7 @@ class Tourist extends User {
         $this->nationality = "";
 		$this->passport_number = "";
     }
-    $sql12 = "SELECT * FROM credentials where UserID=".$id;
+    $sql2 = "SELECT * FROM credentials where UserID=".$id;
     $result2 = $db->query($sql2);
     if ($result2->num_rows == 1){
         $row2 = $db->fetchRow();
@@ -69,7 +69,7 @@ class Tourist extends User {
 
     }
   }
-  
+
   function editUser($email,$password,$mobile){
       $sql1 = "update credentials set Email='$email',Password='$password' where UserID=$this->id;";
       $sql2 = "update tourists set Mobile='$mobile' where Id=$this->id;";
@@ -81,14 +81,14 @@ class Tourist extends User {
             else{
             	echo "ERROR: Could not able to execute $sql. " . $conn->error;
             }
-            
-        } 
+
+        }
         else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
         }
 
   }
-  
+
   function deleteUser(){
 	  $sql1="delete from tourists where Id=$this->id;";
 	  $sql2="delete from credentials where UserID=$this->id;";
@@ -99,10 +99,10 @@ class Tourist extends User {
             else{
             	echo "ERROR: Could not able to execute $sql. " . $conn->error;
             }
-        } 
+        }
       else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
         }
 	}
-	 
+
 }
