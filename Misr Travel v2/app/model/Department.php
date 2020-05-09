@@ -20,7 +20,7 @@ class Department extends Model {
     return $this->name;
   }
   function setName($name) {
-    return $this->name = $name;
+    $this->name = $name;
   }
   function getID() {
     return $this->id;

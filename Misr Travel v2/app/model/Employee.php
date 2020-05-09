@@ -27,7 +27,7 @@ class Employee extends User {
     return $this->departmentId;
   }
   function setDepartmentId($departmentId) {
-    return $this->departmentId = $departmentId;
+    $this->departmentId = $departmentId;
   }
 
   function readUser($id){

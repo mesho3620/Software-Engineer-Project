@@ -24,19 +24,19 @@ class Hotel extends Model {
     return $this->city;
   }
   function setCity($city) {
-    return $this->city = $city;
+    $this->city = $city;
   }
   function getLocation() {
     return $this->location;
   }
   function setLocation($location) {
-    return $this->location = $location;
+    $this->location = $location;
   }
   function getRating() {
     return $this->rating;
   }
   function setRating($rating) {
-    return $this->rating = $rating;
+    $this->rating = $rating;
   }
   function getID() {
     return $this->id;

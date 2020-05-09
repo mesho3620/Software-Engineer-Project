@@ -29,13 +29,13 @@ class Agency extends User {
     return $this->country;
   }
   function setCountry($country) {
-    return $this->country = $country;
+    $this->country = $country;
   }
   function getAddress() {
     return $this->address;
   }
   function setAddress($address) {
-    return $this->address = $address;
+    $this->address = $address;
   }
 
   function readUser($id){

@@ -6,38 +6,46 @@
 <?php
 class Request extends Package {
     private $agencyId;
+    private $touristsno;
     private $status;
 
-  function __construct($id,$agencyId="",$name="",$checkin="",$checkout="",$hotel=new Hotel(),$program="",$price="",$status="") {
+  function __construct($id) {
       $this->id = $id;
 	  $this->db = $this->connect();
 
-    if(""===$name){
+    //if(""===$name){
       $this->readRequest($id);
-    }else{
-      $this->name = $name;
-      $this->agencyId = $agencyId;
-      $this->checkin = $checkin;
-      $this->checkout = $checkout;
-      $this->hotel = $hotel;
-      $this->program = $program;
-      $this->price = $price;
-      $this->status = $status;
+    //}else{
+      //$this->name = $name;
+      //$this->agencyId = $agencyId;
+//$this->checkin = $checkin;
+   //   $this->checkout = $checkout;
+//$this->hotel = new Hotel();
+   //   $this->program = $program;
+   //   $this->price = $price;
+   //   $this->touristsno = $touristsno;
+   //   $this->status = $status;
 
-    }
+   // ,$agencyId="",$name="",$checkin="",$checkout="",$hotel="",$program="",$price="",$touristsno,$status=""}
   }
 
   function getAgencyId() {
     return $this->agencyId;
   }
   function setAgencyId($agencyId) {
-    return $this->agencyId = $agencyId;
+    $this->agencyId = $agencyId;
   }
   function getStatus() {
     return $this->status;
   }
   function setStatus($status) {
-    return $this->status = $status;
+    $this->status = $status;
+  }
+  function getTouristsNo() {
+    return $this->touristsno;
+  }
+  function setTouristsNo($touristsno) {
+    $this->touristsno = $touristsno;
   }
 
 
@@ -54,6 +62,7 @@ class Request extends Package {
         $this->program = $row["Program"];
         $this->price = $row["Price"];
         $this->hotel = new Hotel($row["Hotel_ID"]);
+        $this->touristsno = $row["Tourists"];
         $this->status = $row["Status"];
 
     }
@@ -65,11 +74,12 @@ class Request extends Package {
         $this->program = "";
         $this->price = "";
         $this->hotel = new Hotel();
+        $this->touristsno = "";
         $this->status = "";
     }
   }
-  function editRequest($name,$checkin,$checkout,$hotel,$program,$price,$status){
-      $sql = "update requests set Name='$name',Checkin='$checkin',Checkout='$checkout',Hotel_ID='$hotel->getID()',Program='$program',Price='$price',Status='$status' where ID=$this->id;";
+  function editRequest($name,$checkin,$checkout,$hotel,$program,$price,$touristsno,$status){
+      $sql = "update requests set Name='$name',Checkin='$checkin',Checkout='$checkout',Tourists='$touristsno',Hotel_ID='$hotel->getID()',Program='$program',Price='$price',Status='$status' where ID=$this->id;";
         if($this->db->query($sql) === true){
             echo "updated successfully.";
             $this->readRequest($this->id);

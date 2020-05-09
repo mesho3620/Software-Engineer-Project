@@ -28,13 +28,13 @@ class Tourist extends User {
     return $this->nationality;
   }
   function setNationality($nationality) {
-    return $this->nationality = $nationality;
+    $this->nationality = $nationality;
   }
   function getPassport_Number() {
     return $this->passport_number;
   }
   function setPassport_Number($passport_number) {
-    return $this->passport_number = $passport_number;
+    $this->passport_number = $passport_number;
   }
 
   function readUser($id){

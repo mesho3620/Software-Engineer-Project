@@ -12,7 +12,7 @@ class Package extends Model {
     private $program;
     private $price;
 
-  function __construct($id,$name="",$checkin="",$checkout="",$hotel=new Hotel(),$program="",$price="") {
+  function __construct($id,$name="",$checkin="",$checkout="",$hotel="",$program="",$price="") {
     $this->id = $id;
 	  $this->db = $this->connect();
 
@@ -22,7 +22,7 @@ class Package extends Model {
       $this->name = $name;
       $this->checkin = $checkin;
       $this->checkout = $checkout;
-      $this->hotel = $hotel;
+      $this->hotel = new Hotel();
       $this->program = $program;
       $this->price = $price;
     }
@@ -31,37 +31,37 @@ class Package extends Model {
     return $this->name;
   }
   function setName($name) {
-    return $this->name = $name;
+    $this->name = $name;
   }
   function getCheckin() {
     return $this->checkin;
   }
   function setCheckin($checkin) {
-    return $this->checkin = $checkin;
+    $this->checkin = $checkin;
   }
   function getCheckout() {
     return $this->checkout;
   }
   function setCheckout($checkout) {
-    return $this->checkout = $checkout;
+    $this->checkout = $checkout;
   }
   function getProgram() {
     return $this->program;
   }
   function setProgram($program) {
-    return $this->program = $program;
+    $this->program = $program;
   }
   function getPrice() {
     return $this->price;
   }
   function setPrice($price) {
-    return $this->price = $price;
+    $this->price = $price;
   }
   function getHotel() {
     return $this->hotel;
   }
   function setHotel($hotel) {
-    return $this->hotel = $hotel;
+    $this->hotel = $hotel;
   }
   function getID() {
     return $this->id;

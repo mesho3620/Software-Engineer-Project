@@ -18,25 +18,25 @@ class User extends Model {
     return $this->name;
   }
   function setName($name) {
-    return $this->name = $name;
+    $this->name = $name;
   }
   function getEmail() {
-    return $email->email;
+    return $this->email;
   }
   function setEmail($email) {
-    return $this->email = $email;
+    $this->email = $email;
   }
   function getPassword() {
     return $this->password;
   }
   function setPassword($password) {
-    return $this->password = $password;
+    $this->password = $password;
   }
   function getMobile() {
     return $this->mobile;
   }
   function setMobile($mobile) {
-    return $this->mobile = $mobile;
+    $this->mobile = $mobile;
   }
   function getID() {
     return $this->id;

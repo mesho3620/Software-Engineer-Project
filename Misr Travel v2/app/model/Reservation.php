@@ -9,7 +9,7 @@ class Reservation extends Model {
     private $touristId;
     private $package;
 
-    function __construct($id,$touristId="",$package=new Package()) {
+    function __construct($id,$touristId="",$package="") {
 	    $this->id = $id;
 		$this->db = $this->connect();
 
@@ -17,20 +17,20 @@ class Reservation extends Model {
 	      $this->readReservation($id);
 	    }else{
 	      $this->touristId = $touristId;
-	      $this->package = $package;
+	      $this->package = new Package();
 	    }
   	}
     function getTouristId() {
     	return $this->touristId;
     }
     function setTouristId($touristId) {
-    	return $this->touristId = $touristId;
+    	$this->touristId = $touristId;
     }
     function getPackage() {
       	return $this->package;
     }
     function setPackage($package) {
-    	return $this->package = $package;
+    	$this->package = $package;
     }
     function getID() {
     	return $this->id;

@@ -52,7 +52,7 @@ class Agencies extends Model {
 
 	function insertAgency($name,$email,$password,$mobile,$country,$address){
 		$sql = "INSERT INTO agencies (Name, Mobile, Country, Address) VALUES ('$name','$mobile', '$country', '$address');
-				INSERT INTO credentials(Email, Password, Type) VALUES ('$email','$password','T');
+				INSERT INTO credentials(Email, Password, Type) VALUES ('$email','$password','A');
 				UPDATE credentials SET UserID=(SELECT Id FROM agencies WHERE Name='$name' AND Mobile='$mobile' AND Country='$country' AND Address='$address') WHERE Email='$email';";
 		if($this->db->query($sql) === true){
 			echo "Records inserted successfully.";

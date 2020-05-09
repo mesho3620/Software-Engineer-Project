@@ -44,8 +44,8 @@ class Requests extends Model {
         return false;
     }
   }
-  function insertRequest($name,$checkin,$checkout,$hotel,$program,$price){
-    $sql = "INSERT INTO packages (AgencyID,Name,Checkin,Checkout,Hotel_ID,Program,Price,Status) VALUES ('".$_SESSION['ID']."','$name','$checkin','$checkout','$hotel->getID()','$program','$price','Pending confirmation')";
+  function insertRequest($name,$checkin,$checkout,$hotel,$program,$touristsno,$price){
+    $sql = "INSERT INTO packages (AgencyID,Name,Checkin,Checkout,Hotel_ID,Program,Price,Tourists,Status) VALUES ('".$_SESSION['ID']."','$name','$checkin','$checkout','$hotel->getID()','$program','$price','$touristsno','Pending confirmation')";
     if($this->db->query($sql) === true){
       echo "Record inserted successfully.";
       $this->fillArray();
