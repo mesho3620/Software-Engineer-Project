@@ -1,10 +1,26 @@
 <?php
 require_once(__ROOT__ . "view/View.php");
+
 class ViewPackage extends View{
+
+	//protected $touristmodel;
+	protected $reservationsmodel;
+	protected $packagemodel;
+
+	public function __construct($controller/*,$touristmodel*/,$reservationsmodel,$packagemodel)
+	{
+
+		$this->controller=$controller;
+		// $this->touristmodel=$touristmodel;
+		$this->reservationsmodel=$reservationsmodel;
+		$this->packagemodel=$packagemodel;
+
+	}
+
 	public function output(){
 		$str = "";
 		//$str.="<a href='profile.php'>Back to Profile </a>";
-
+		$reserved=false;
 
 
 																																										//Header Package Image
@@ -38,13 +54,13 @@ class ViewPackage extends View{
 					<div id='Program' class='tab-pane fade show active'>
 
 				  <h3>CHECK IN</h3>
-				  <p>".$this->model->getCheckin()."</p>
+				  <p>".$this->packagemodel->getCheckin()."</p>
 
 				  <h3>CHECK OUT</h3>
-					<p>".$this->model->getCheckout()."</p>
+					<p>".$this->packagemodel->getCheckout()."</p>
 
 				  <h1>PROGRAM</h1>
-					<p>".$this->model->getProgram()."</p>
+					<p>".$this->packagemodel->getProgram()."</p>
 
 
 					</div>";
@@ -52,21 +68,36 @@ class ViewPackage extends View{
 		$str.="<div id='HOTELSPRICES' class='tab-pane fade'>
 
 						<h3>CITY</h3>
-						<p>".$this->model->getHotel()->getCity()."</p>
+						<p>".$this->packagemodel->getHotel()->getCity()."</p>
 
 					  <h3>LOCATION</h3>
-					  <p>".$this->model->getHotel()->getLocation()."</p>
+					  <p>".$this->packagemodel->getHotel()->getLocation()."</p>
 
 						<h3>RATING</h3>
-						<p>".$this->model->getHotel()->getRating()."</p>
+						<p>".$this->packagemodel->getHotel()->getRating()."</p>
 
 						<h3>PRICE</h3>
-						<p>".$this->model->getPrice()."</p>
+						<p>".$this->packagemodel->getPrice()."</p>
 
 
 						</div>";
 
-		$str.="<form action='Tourist.php?action=book' method='post'><div style='display:none;'><input name='package_ID' value='".$this->model->getID()."'/></div><div><input type='submit' value='Book' class='btn btn-danger'/></div></div></div></form>";
+		foreach ($this->reservationsmodel->getReservations() as $reservation)
+		{
+				if($reservation->getPackage()->getID()==$this->packagemodel->getID() && $reservation->getTouristId()==$_SESSION['ID'])
+				{
+					$reserved=true;
+					$reservationID=$reservation->getID();
+				}
+		}
+		if($reserved)
+		{
+			$str.="<form action='Tourist.php?action=cancelReservation' method='post'><div style='display:none;'><input name='reservation_ID' value='".$reservationID."'/></div><div><input type='submit' value='Cancel Reservation' class='btn btn-danger'/></div></div></div></form>";
+		}
+		else
+		{
+			$str.="<form action='Tourist.php?action=book' method='post'><div style='display:none;'><input name='package_ID' value='".$this->packagemodel->getID()."'/></div><div><input type='submit' value='Book' class='btn btn-danger'/></div></div></div></form>";
+		}
 // $str.='</body>';
 		return $str;
 	}

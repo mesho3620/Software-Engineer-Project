@@ -24,20 +24,20 @@ include("css/viewPackage.css");
 // $t->insertTourist(insertTourist$name,$email,$password,$mobile,$nationality,$passport_number);
 $_SESSION['ID']=1;
 $touristmodel = new Tourist($_SESSION["ID"]);
-$packagemodel=new Packages();
+$packagesmodel=new Packages();
 $reservationsmodel=new Reservations();
-$controller = new TouristController($reservationsmodel,$packagemodel);
-$view = new ViewHome($controller, $touristmodel);
+$controller = new TouristController($reservationsmodel,$packagesmodel,$touristmodel);
+$view = new ViewHome($controller, $touristmodel,$reservationsmodel,$packagesmodel);
 
 
 
 if (isset($_GET['action']) && !empty($_GET['action'])) {
 	switch($_GET['action']){
-		case 'edit':																								//missing
-			echo $view->editForm();
+		case 'edit':
+			echo $view->editProfile();
 			break;
-		case 'editaction':																								//missing
-			$controller->edit();
+		case 'editaction':
+			$controller->editProfile();
 			echo $view->output();
 			break;
 		case 'book':
@@ -45,14 +45,18 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 			echo $view->output();
 			break;
 		case 'viewPackage':
-			$model2=new Package($_REQUEST['SelectedPackage']);
-			$view2 = new ViewPackage($controller, $model2);
+			$packagemodel=new Package($_REQUEST['SelectedPackage']);
+			$view2 = new ViewPackage($controller, $reservationsmodel,$packagemodel);
 			echo $view2->output();
 			break;
-		case 'remove':																								//missing
+		case 'viewReserved':
+			echo $view->viewReserved();
+			break;
+		case 'cancelReservation':
 			$controller->deleteReservation();
 			echo $view->output();
-		case 'signOut':																								//missing
+			break;
+		case 'logOut':																								//missing
 			session_destroy();
 			header("Location:index.php");
 			break;

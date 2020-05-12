@@ -47,7 +47,7 @@ class Hotel extends Model {
     $result = $db->query($sql);
     if ($result->num_rows == 1){
         $row = $db->fetchRow();
-        $this->city = $row["City"];
+        //$this->city = $row["City"];
         $this->location = $row["Location"];
         $this->rating = $row["Rating"];
     }
@@ -76,5 +76,5 @@ class Hotel extends Model {
         }
   }
 }
-	
+
 ?>

@@ -7,7 +7,7 @@
 <?php
 class Packages extends Model {
     private $packages;
-  
+
   function __construct() {
       $this->fillArray();
   }
@@ -18,7 +18,7 @@ class Packages extends Model {
     while ($row = $result->fetch_assoc()) {
      array_push($this->packages, new Package($row["ID"]));
     }
-    
+
   }
   function getPackages() {
     return $this->packages;
@@ -34,7 +34,7 @@ class Packages extends Model {
 
   function readPackages(){
     $sql = "SELECT * FROM packages";
-    
+
     $result = $this->db->query($sql);
     if ($result->num_rows > 0){
         return $result;
@@ -48,11 +48,10 @@ class Packages extends Model {
     if($this->db->query($sql) === true){
       echo "Record inserted successfully.";
       $this->fillArray();
-    } 
+    }
     else{
       echo "ERROR: Could not able to execute $sql. " . $conn->error;
     }
   }
 }
 ?>
-

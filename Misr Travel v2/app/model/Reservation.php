@@ -17,7 +17,7 @@ class Reservation extends Model {
 	      $this->readReservation($id);
 	    }else{
 	      $this->touristId = $touristId;
-	      $this->package = new Package();
+	      $this->package = $package();
 	    }
   	}
     function getTouristId() {

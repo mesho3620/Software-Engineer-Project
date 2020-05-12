@@ -26,7 +26,7 @@
       return $this->reservations;
     }
 
-    function getReservation($reservationID) {
+    public function getReservation($reservationID) {
       foreach ($this->reservations as $reservation) {
         if ( $reservationID == $reservation->getID() ){
           return $reservation;
@@ -41,7 +41,6 @@
           return $result;
       }
       else {
-        echo"<script>alert('lol')</script>";
           return false;
       }
     }
