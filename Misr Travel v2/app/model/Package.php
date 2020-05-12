@@ -86,7 +86,7 @@ class Package extends Model {
         $this->checkout = "";
         $this->program = "";
         $this->price = "";
-        $this->hotel = new Hotel();
+        $this->hotel = new Hotel(-1);
     }
   }
   function editPackage($name,$checkin,$checkout,$hotel,$program,$price){
@@ -108,5 +108,5 @@ class Package extends Model {
         }
   }
 }
-	
+
 ?>

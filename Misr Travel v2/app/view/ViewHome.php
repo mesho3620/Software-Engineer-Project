@@ -3,6 +3,19 @@
 require_once(__ROOT__ . "view/View.php");
 
 class ViewHome extends View{
+	protected $touristmodel;
+	protected $reservationsmodel;
+	protected $packagemodel;
+
+	public function __construct($controller,$touristmodel,$reservationsmodel,$packagemodel)
+	{
+
+		$this->controller=$controller;
+		$this->touristmodel=$touristmodel;
+		$this->reservationsmodel=$reservationsmodel;
+		$this->packagemodel=$packagemodel;
+
+	}
 	public function output($ss=""){
 		$str="";
     $str.='<div id="myCarousel" class="carousel slide" data-ride="carousel">    <!-- carousel -->
@@ -87,7 +100,7 @@ class ViewHome extends View{
 $str.='<div class="row">
 ';
 
-foreach ($this->model->getPackages as $Package)
+foreach ($this->packagemodel->GetPackages() as $Package)
 {
 
 	$str.='<div class="col-md-4">
@@ -103,15 +116,14 @@ foreach ($this->model->getPackages as $Package)
 					</p>
 					<p>'.$Package->getPrice().'</p>
 
-				<form action="home.php?action=viewPackage" method="post">
-					<div style="display:none;""><input name=selectedPackage" value="'.$Package->getID().'"/></div>
+				<form action="Tourist.php?action=viewPackage" method="post">
+					<div style="display:none;"><input name="SelectedPackage" value="'.$Package->getID().'"/></div>
 					<input type="submit" class="w3-button w3-block w3-black w3-margin-bottom" value="Read More">
 				 </form>
 
         </div>
       </div>
     </div>';
-
 
 }
 
@@ -120,6 +132,77 @@ $str.='</div>';
 
 		return $str;
 	}
+
+public function viewReserved()
+{
+
+	$str="";
+
+	$str.='<div class="row">';
+
+	foreach ($this->touristmodel->getReservedPackages() as $reservedPackage)
+	{
+		$Package=$this->packagemodel->getPackage($reservedPackage[0]);							//0->packageID 1->reservationID
+		$str.='<div class="col-md-4">
+	     <div class="thumbnail">
+	        <img src="Slideshow/w.jpg" alt="Norway" style="width:100%">
+	        <div class="w3-container w3-white">
+					<p>Reservation ID: '.$reservedPackage[1].'</p>
+	          <h3>'.$Package->getName().'</h3>
+	          <p style="width: 250px;
+	     					overflow: hidden;
+	     					white-space: nowrap;
+	     					text-overflow: ellipsis;">
+						Price:'.$Package->getProgram().'
+						</p>
+						<p>'.$Package->getPrice().'</p>
+
+					<form action="Tourist.php?action=viewPackage" method="post">
+						<div style="display:none;"><input name="SelectedPackage" value="'.$Package->getID().'"/></div>
+						<input type="submit" class="w3-button w3-block w3-black w3-margin-bottom" value="Read More">
+					 </form>
+
+	        </div>
+	      </div>
+	    </div>';
+
+	}
+
+	$str.='</div>';
+
+	return $str;
+
+}
+
+public function editProfile()
+{
+
+	$str='';
+	$str.='<div class="DataTable" style="overflow:auto;" id="Profile">
+		<div class="profile">
+		<form action="Tourist.php?action=editaction" method="post">
+		<br><br>
+
+	    <label class="text"><b>Mobile</b></label>
+		<input type="text" value="'.$this->touristmodel->getMobile().'" name="mobile" class="box">
+		<br><br><br><br>
+
+	    <label class="text"><b>Email</b></label>
+	    <input type="text" value="'.$this->touristmodel->getEmail().'" name="email" class="box" >
+	    <br><br><br><br>
+
+			<label class="text"><b>Password</b></label>
+			<input type="password" value="'.$this->touristmodel->getPassword().'" name="password" class="box">
+			<br><br><br><br>
+
+	    <input type="submit" value="Save" class="btn btn-info" name="save" id="save">
+
+
+
+		</form>
+		</div></div>';
+		return $str;
+}
 
 }
 ?>

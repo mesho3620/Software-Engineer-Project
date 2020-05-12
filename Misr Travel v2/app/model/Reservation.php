@@ -17,7 +17,7 @@ class Reservation extends Model {
 	      $this->readReservation($id);
 	    }else{
 	      $this->touristId = $touristId;
-	      $this->package = new Package();
+	      $this->package = $package();
 	    }
   	}
     function getTouristId() {
@@ -53,11 +53,11 @@ class Reservation extends Model {
 	    $sql="delete from reservations where ID=$this->id;";
 	    if($this->db->query($sql) === true){
             echo "deleted successfully.";
-        } 
+        }
 	    else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
         }
 	}
 }
-	
+
 ?>
