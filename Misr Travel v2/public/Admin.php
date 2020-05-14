@@ -66,6 +66,7 @@
 <?php
 
 define('__ROOT__', "../app/");
+
 require_once(__ROOT__ . "model/Tourists.php");
 require_once(__ROOT__ . "model/Agencies.php");
 require_once(__ROOT__ . "model/Employees.php");
@@ -88,7 +89,6 @@ $hotelmodel = new Hotels();
 $controller = new AdminController($touristmodel,$agencymodel,$staffmodel,$departmentmodel,$packagemodel,$requestmodel,$reservationmodel,$hotelmodel);
 $view = new ViewAdmin($controller,$touristmodel,$agencymodel,$staffmodel,$departmentmodel,$packagemodel,$requestmodel,$reservationmodel,$hotelmodel);
 
-
 if (isset($_GET['action']) && !empty($_GET['action'])) {
 	switch($_GET['action']){
 		case 'ViewTourists':
@@ -109,12 +109,66 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 		case 'ViewStaff':
 			echo $view->showStaff();
 			break;
+		case 'addStaff':
+			echo $view->addStaff();
+			break;
 		case 'ViewDepartments':
 			echo $view->showDepartments();
 			break;
 		case 'ViewHotels':
 			echo $view->showHotels();
 			break;
+		case 'AddHotel':
+			echo $view->addHotel();
+			break;
+		case 'DeleteAgency':
+			$controller->deleteAgency();
+			header("Location:Admin.php?action=ViewAgencies");
+			break;
+		case 'DeleteTourist':
+			$controller->deleteTourist();
+			header("Location:Admin.php?action=ViewTourists");
+			break;
+		case 'DeleteStaff':
+			$controller->deleteStaff();
+			header("Location:Admin.php?action=ViewStaff");
+			break;
+		case 'DeleteRequest':
+			$controller->deleteRequest();
+			header("Location:Admin.php?action=ViewRequests");
+			break;
+		case 'DeletePackage':
+			$controller->deletePackage();
+			header("Location:Admin.php?action=ViewPackages");
+			break;
+		case 'DeleteReservation':
+			$controller->deleteReservation();
+			header("Location:Admin.php?action=ViewReservations");
+			break;
+		case 'DeleteDepartment':
+			$controller->deleteDepartment();
+			header("Location:Admin.php?action=ViewDepartments");
+			break;
+		case 'DeleteHotel':
+			$controller->deleteHotel();
+			header("Location:Admin.php?action=ViewHotels");
+			break;
+
+
+	}
+	if(isset($_POST['addEmployee'])){
+
+			$controller->insertStaff();
+	}
+	if(isset($_POST['addHotel'])){
+
+			$controller->insertHotel();
+			header("Location:Admin.php?action=ViewHotels");
+	}
+	if(isset($_POST['addDepartment'])){
+
+			$controller->insertDepartment();
+			header("Location:Admin.php?action=ViewDepartments");
 	}
 }
 else
