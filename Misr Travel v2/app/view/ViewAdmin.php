@@ -25,7 +25,7 @@ class ViewAdmin extends View{
         $this->hotelmodel = $hotelmodel;
     }
   private $str="";
-  protected $str2='<body>
+  private $str2='<body>
   	<div class="rectangle">
 	  <div class="sidenav">
 	  <img src="img1.png" class="logo">
@@ -47,7 +47,7 @@ class ViewAdmin extends View{
     <a href="Admin.php?action=ViewHotels">Hotels</a>
     <br><br>
 	  <br>
-	  <a href="Admin.php?action=logout">Log Out   <span class="glyphicon glyphicon-log-out" ></span></a>
+	  <a href="logout.php">Log Out   <span class="glyphicon glyphicon-log-out" ></span></a>
 	  </div>';
 
 	function showTourists(){
@@ -72,6 +72,8 @@ class ViewAdmin extends View{
             $this->str.='<td>'.$Tourist->getMobile().'</td>';
             $this->str.='<td>'.$Tourist->getNationality().'</td>';
             $this->str.='<td>'.$Tourist->getPassport_Number().'</td>';
+            $this->str.='<td><a href="Admin.php?action=DeleteTourist&id='.$Tourist->getID().'" class= "btn btn-danger"><span
+            class="glyphicon glyphicon-remove"></span>Delete</a></td>';
             $this->str.='</tr>';
 
           }
@@ -104,10 +106,11 @@ class ViewAdmin extends View{
         $this->str.='<td>'.$Agency->getMobile().'</td>';
         $this->str.='<td>'.$Agency->getCountry().'</td>';
         $this->str.='<td>'.$Agency->getAddress().'</td>';
+        $this->str.='<td><a href="Admin.php?action=DeleteAgency&id='.$Agency->getID().'" class= "btn btn-danger"><span
+      class="glyphicon glyphicon-remove"></span>Delete</a></td>';
         $this->str.='</tr>';
 
       }
-
 		$this->str.='</table>
           </div></div>';
           return $this->str2.$this->str;
@@ -139,6 +142,8 @@ class ViewAdmin extends View{
       $this->str.='<td>'.$Request->getCheckout().'</td>';
       $this->str.='<td>'.$Request->getPrice().'</td>';
       $this->str.='<td>'.$Request->getStatus().'</td>';
+      $this->str.='<td><a href="Admin.php?action=DeleteRequest&id='.$Request->getID().'" class= "btn btn-danger"><span
+      class="glyphicon glyphicon-remove"></span>Delete</a></td>';
       $this->str.='</tr>';
       
 
@@ -151,7 +156,7 @@ class ViewAdmin extends View{
 	}
 
   function showPackages(){
-    $this->str='<div class="DataTable" style="overflow:auto;" id="Packages">  <!-- Packages block -->
+    $this->str='<div class="DataTable" style="overflow:auto;">  
 			<table class="table table-striped table-hover">
 			<thead>
 		 <tr>
@@ -172,6 +177,8 @@ class ViewAdmin extends View{
         $this->str.='<td>'.$Package->getCheckin().'</td>';
         $this->str.='<td>'.$Package->getCheckout().'</td>';
         $this->str.='<td>'.$Package->getPrice().'</td>';
+      $this->str.='<td><a href="Admin.php?action=DeletePackage&id='.$Package->getID().'" class= "btn btn-danger"><span
+      class="glyphicon glyphicon-remove"></span>Delete</a></td>';
         $this->str.='</tr>';
 
       }
@@ -201,6 +208,8 @@ class ViewAdmin extends View{
         $this->str.='<td>'.$Reservation->getTouristId().'</td>';
         $this->str.='<td>'.$Reservation->getPackage()->getName().'</td>';
         $this->str.='<td>'.$Reservation->getPackage()->getCheckin().'</td>';
+      $this->str.='<td><a href="Admin.php?action=DeleteReservation&id='.$Reservation->getID().'" class= "btn btn-danger"><span
+      class="glyphicon glyphicon-remove"></span>Delete</a></td>';
         $this->str.='</tr>';
 
       }
@@ -212,7 +221,7 @@ class ViewAdmin extends View{
 
   function showStaff(){
     $this->str='<div class="DataTable" style="overflow:auto;" id="Staff">
-			<span class="pull-left" style="padding-left:5%;padding-top:1%;padding-bottom:1%;"><a href="#addStaff" data-toggle="modal" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add Staff</a></span>
+			<span class="pull-left" style="padding-left:5%;padding-top:1%;padding-bottom:1%;"><a href="Admin.php?action=addStaff" data-toggle="modal" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add Staff</a></span>
 			<table class="table table-striped table-hover">
 			<thead>
 		 <tr>
@@ -231,6 +240,8 @@ class ViewAdmin extends View{
         $this->str.='<td>'.$Staff->getEmail().'</td>';
         $this->str.='<td>'.$Staff->getMobile().'</td>';
         $this->str.='<td>'.$Staff->getDepartmentId().'</td>';
+        $this->str.='<td><a href="Admin.php?action=DeleteStaff&id='.$Staff->getID().'" class= "btn btn-danger"><span
+     class="glyphicon glyphicon-remove"></span>Delete</a></td>';
         $this->str.='</tr>';
 
       }
@@ -240,9 +251,72 @@ class ViewAdmin extends View{
           return $this->str2.$this->str;
   }
 
+  function addStaff(){
+    $this->str='<div class="DataTable" style="overflow:auto;">
+
+  <form action="Admin.php?action=ViewStaff" method="post">
+    <br>
+
+
+    <label class="text"><b>Name</b></label>
+    <input type="text" name="name" class="box" required>
+    <br><br>
+ 
+    <label class="text"><b>Email</b></label>
+
+    <input type="text" name="email" id="email" class="box" required>
+    <div id="msg"></div>
+    <br><br>
+
+    <label class="text"><b>Password</b></label>
+
+    <input type="password" name="password" class="box" required>
+    <br><br>  
+
+    <label class="text"><b>Mobile</b></label>
+    <input type="text" name="mobile" class="box" class="box" required>
+    <br><br>
+
+    <label class="text"><b>Department</b></label>
+
+
+    <select name="departmentId" class="box" required>
+    <option value="" disabled selected>Select department</option>';
+
+
+    foreach ($this->departmentmodel->getDepartments() as $Department)
+      {
+    
+      $this->str.='<option value="'.$Department->getID().'">'.$Department->getName().'</option>';
+    }
+  
+
+    $this->str.='
+    </select>
+    
+
+
+
+
+    <br><br>
+ 
+
+    <input type="submit" value="Add Employee" class="btn btn-primary" name="addEmployee">
+    
+
+  
+  </form>
+  </div>';
+
+          return $this->str2.$this->str;
+  }
+
   function showDepartments(){
-    $this->str='<div class="DataTable" style="overflow:auto;" id="Departments">  <!-- Departments block -->
-			<span class="pull-left" style="padding-left:5%;padding-top:1%;padding-bottom:1%;"><a href="#addDep" data-toggle="modal" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add Department</a></span>
+    $this->str='<div class="DataTable" style="overflow:auto;">
+			<span class="pull-left" style="padding-left:5%;padding-top:1%;padding-bottom:1%;"><form action="Admin.php?action=ViewDepartments" method="post">
+      <input type="text" name="name" placeholder="Department name" class="box" required> 
+    <input type="submit" value="Add Department" class="btn btn-primary" name="addDepartment" >
+    </form></span>
 			<table class="table table-striped table-hover">
 			<thead>
 		 <tr>
@@ -258,6 +332,9 @@ class ViewAdmin extends View{
         $this->str.='<tr>';
         $this->str.='<td>'.$Department->getID().'</td>';
         $this->str.='<td>'.$Department->getName().'</td>';
+        $this->str.='<td>'.''.'</td>';
+      $this->str.='<td><a href="Admin.php?action=DeleteDepartment&id='.$Department->getID().'" class= "btn btn-danger"><span
+      class="glyphicon glyphicon-remove"></span>Delete</a></td>';
         $this->str.='</tr>';
 
       }
@@ -267,15 +344,15 @@ class ViewAdmin extends View{
           return $this->str2.$this->str;
   }
   function showHotels(){
-    $this->str='<div class="DataTable" style="overflow:auto;" id="Departments">  <!-- Departments block -->
-      <span class="pull-left" style="padding-left:5%;padding-top:1%;padding-bottom:1%;"><a href="#addDep" data-toggle="modal" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add Department</a></span>
+    $this->str='<div class="DataTable" style="overflow:auto;" >
+      <span class="pull-left" style="padding-left:5%;padding-top:1%;padding-bottom:1%;"><a href="Admin.php?action=AddHotel" data-toggle="modal" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add Hotel</a></span>
       <table class="table table-striped table-hover">
       <thead>
      <tr>
       <th>ID</th>
       <th>City</th>
       <th>Location</th>
-      <th>Rating</th>
+      <th>Rating</th>=
       <th>Action</th>
     </tr>';
 
@@ -287,6 +364,8 @@ class ViewAdmin extends View{
         $this->str.='<td>'.$Hotel->getCity().'</td>';
         $this->str.='<td>'.$Hotel->getLocation().'</td>';
         $this->str.='<td>'.$Hotel->getRating().'</td>';
+      $this->str.='<td><a href="Admin.php?action=DeleteHotel&id='.$Hotel->getID().'" class= "btn btn-danger"><span
+      class="glyphicon glyphicon-remove"></span>Delete</a></td>';
         $this->str.='</tr>';
 
       }
@@ -295,5 +374,46 @@ class ViewAdmin extends View{
           </div></div>';
           return $this->str2.$this->str;
   }
+  function addHotel(){
+    $this->str='<div class="DataTable" style="overflow:auto;">
+
+  <form action="Admin.php?action=ViewHotels" method="post">
+    <br>
+
+
+    <label class="text"><b>City</b></label>
+    <input type="text" name="city" class="box" required>
+    <br><br>
+ 
+    <label class="text"><b>Location</b></label>
+
+    <input type="text" name="location" class="box" required>
+    <div id="msg"></div>
+    <br><br> 
+
+    <label class="text"><b>Rating</b></label>
+
+    <select name="rating" class="box" required>
+    <option value="1">1 stars</option>
+    <option value="2">2 stars</option>
+    <option value="3">3 stars</option>
+    <option value="4">4 stars</option>
+    <option value="5">5 stars</option>
+    </select>
+    <br><br>
+
+ 
+
+    <input type="submit" value="Add Hotel" class="btn btn-primary" name="addHotel" >
+    
+
+  
+  </form>
+  </div>';
+
+          return $this->str2.$this->str;
+  }
+
 }
 ?>
+
