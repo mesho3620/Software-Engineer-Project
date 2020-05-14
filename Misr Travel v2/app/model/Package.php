@@ -4,13 +4,13 @@
 ?>
 <?php
 class Package extends Model {
-    private $id;
-    private $name;
-    private $checkin;
-    private $checkout;
-    private $hotel;
-    private $program;
-    private $price;
+    protected $id;
+    protected $name;
+    protected $checkin;
+    protected $checkout;
+    protected $hotel;
+    protected $program;
+    protected $price;
 
   function __construct($id,$name="",$checkin="",$checkout="",$hotel="",$program="",$price="") {
     $this->id = $id;
@@ -86,7 +86,7 @@ class Package extends Model {
         $this->checkout = "";
         $this->program = "";
         $this->price = "";
-        $this->hotel = new Hotel();
+        $this->hotel = "";
     }
   }
   function editPackage($name,$checkin,$checkout,$hotel,$program,$price){
@@ -102,11 +102,11 @@ class Package extends Model {
   function deletePackage(){
     $sql="delete from packages where ID=$this->id;";
     if($this->db->query($sql) === true){
-            echo "deleted successfully.";
+              echo '<script>alert("deleted successfully");</script>';
         } else{
-            echo "ERROR: Could not able to execute $sql. " . $conn->error;
+              echo '<script>alert("ERROR: Could not able to execute $sql ' . $this->db->conn->error.'");</script>' ;
         }
   }
 }
-	
+
 ?>

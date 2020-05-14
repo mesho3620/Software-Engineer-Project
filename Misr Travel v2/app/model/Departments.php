@@ -6,7 +6,7 @@
 <?php
 class Departments extends Model {
     private $departments;
-  
+
   function __construct() {
       $this->fillArray();
   }
@@ -14,10 +14,11 @@ class Departments extends Model {
     $this->departments = array();
     $this->db = $this->connect();
     $result = $this->readDepartments();
+    if($result!=false)
     while ($row = $result->fetch_assoc()) {
      array_push($this->departments, new Department($row["ID"]));
     }
-    
+
   }
   function getDepartments() {
     return $this->departments;
@@ -33,7 +34,7 @@ class Departments extends Model {
 
   function readDepartments(){
     $sql = "SELECT * FROM departments";
-    
+
     $result = $this->db->query($sql);
     if ($result->num_rows > 0){
         return $result;
@@ -47,7 +48,7 @@ class Departments extends Model {
     if($this->db->query($sql) === true){
       echo "Record inserted successfully.";
       $this->fillArray();
-    } 
+    }
     else{
       echo "ERROR: Could not able to execute $sql. " . $conn->error;
     }

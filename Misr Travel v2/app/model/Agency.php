@@ -19,7 +19,7 @@ class Agency extends User {
       $this->name = $name;
       $this->email = $email;
 	    $this->password=$password;
-      $this->mobile = $mobile;    
+      $this->mobile = $mobile;
 	    $this->country=$country;
       $this->address = $address;
     }
@@ -49,14 +49,14 @@ class Agency extends User {
 		    $this->mobile=$row1["Mobile"];
         $this->country = $row1["Country"];
     		$this->address = $row1["Address"];
-        } 
+        }
     else {
         $this->name = "";
 	     	$this->mobile="";
         $this->country = "";
     		$this->address = "";
         }
-    $sql12 = "SELECT * FROM credentials where UserID=".$id;
+    $sql2 = "SELECT * FROM credentials where UserID=".$id;
     $result2 = $db->query($sql2);
     if ($result2->num_rows == 1){
         $row2 = $db->fetchRow();
@@ -69,7 +69,7 @@ class Agency extends User {
 		    $this->password="";
     }
   }
-  
+
   function editUser($email,$password,$mobile,$address){
       $sql1 = "update credentials set Email='$email',Password='$password' where UserID=$this->id;";
       $sql2 = "update agencies set Mobile='$mobile',Address='$address' where Id=$this->id;";
@@ -81,14 +81,14 @@ class Agency extends User {
             else{
             	echo "ERROR: Could not able to execute $sql. " . $conn->error;
             }
-            
-        } 
+
+        }
         else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
         }
 
   }
-  
+
   function deleteUser(){
 	  $sql1="delete from agencies where Id=$this->id;";
 	  $sql2="delete from credentials where UserID=$this->id;";
@@ -99,10 +99,10 @@ class Agency extends User {
             else{
             	echo "ERROR: Could not able to execute $sql. " . $conn->error;
             }
-        } 
+        }
       else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
         }
 	}
-	 
+
 }

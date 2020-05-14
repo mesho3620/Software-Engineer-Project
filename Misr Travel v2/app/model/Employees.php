@@ -13,6 +13,7 @@ class Employees extends Model {
 		$this->employees = array();
 		$this->db = $this->connect();
 		$result = $this->readStaff();
+		if($result!=false)
 		while ($row = $result->fetch_assoc()) {
 			array_push($this->employees, new Employee($row["Id"],$row["Name"],$row["Email"],$row["Password"],$row["Mobile"],$row["DepartmentId"]));
 		}
@@ -57,13 +58,9 @@ class Employees extends Model {
 		if($this->db->query($sql) === true){
 			echo "Records inserted successfully.";
 			$this->fillArray();
-		} 
+		}
 		else{
 			echo "ERROR: Could not able to execute $sql. " . $conn->error;
 		}
 	}
 }
-
-
-
-

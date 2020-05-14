@@ -8,7 +8,7 @@
 <?php
   class Reservations extends Model {
     private $reservations;
-    
+
     function __construct() {
         $this->fillArray();
     }
@@ -16,16 +16,17 @@
       $this->reservations = array();
       $this->db = $this->connect();
       $result = $this->readReservations();
+      if($result!=false)
       while ($row = $result->fetch_assoc()) {
        array_push($this->reservations, new Reservation($row["ID"]));
       }
-      
+
     }
     function getReservations() {
       return $this->reservations;
     }
 
-    function getReservation($reservationID) {
+    public function getReservation($reservationID) {
       foreach ($this->reservations as $reservation) {
         if ( $reservationID == $reservation->getID() ){
           return $reservation;
@@ -44,15 +45,15 @@
       }
     }
     function insertReservation($package_ID){
-      $sql = "INSERT INTO reservations (Package_ID,Tourist_ID) VALUES ('$package_ID',".$_SESSION['ID']."')";
+      $sessionID=$_SESSION['ID'];
+      $sql = "INSERT INTO reservations (Package_ID,Tourist_ID) VALUES ('$package_ID','$sessionID')";
      if($this->db->query($sql) === true){
         echo "Record inserted successfully.";
         $this->fillArray();
-      } 
+      }
       else{
         echo "ERROR: Could not able to execute $sql. " . $conn->error;
       }
     }
   }
 ?>
-

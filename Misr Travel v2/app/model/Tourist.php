@@ -6,6 +6,7 @@
 class Tourist extends User {
   private $nationality;
   private $passport_number;
+  protected $reservedPackages;
 
 
   function __construct($id,$name="",$email="",$password="",$mobile="",$nationality="",$passport_number="") {
@@ -18,12 +19,35 @@ class Tourist extends User {
       $this->name = $name;
       $this->email = $email;
 	    $this->password=$password;
-      $this->mobile = $mobile;    
+      $this->mobile = $mobile;
 	    $this->nationality=$nationality;
       $this->passport_number = $passport_number;
     }
+
+    $this->fillArray();
   }
 
+  function fillArray() {
+    $this->reservedPackages = array();
+    $this->db = $this->connect();
+    $result = $this->reservedPackages();
+    while ($row = $result->fetch_assoc()) {
+     array_push($this->reservedPackages, [$row["package_id"],$row['reservation_id']]);
+    }
+
+  }
+
+  function getReservedPackages() {
+    return $this->reservedPackages;
+  }
+  function getReservedPackage($id) {
+    foreach ($this->reservedPackages as $reservation) {
+        if ( $id == $reservation[0] ){
+          return $reservation;
+        }
+      }
+    return $this->reservedPackages;
+  }
   function getNationality() {
     return $this->nationality;
   }
@@ -37,6 +61,7 @@ class Tourist extends User {
     $this->passport_number = $passport_number;
   }
 
+
   function readUser($id){
     $db = $this->connect();
     $sql1 = "SELECT * FROM tourists where Id=".$id;
@@ -48,14 +73,16 @@ class Tourist extends User {
 		$this->mobile=$row1["Mobile"];
         $this->nationality = $row1["Nationality"];
 		$this->passport_number = $row1["PassportNumber"];
+
     }
     else {
+
         $this->name = "";
 		$this->mobile="";
         $this->nationality = "";
 		$this->passport_number = "";
     }
-    $sql12 = "SELECT * FROM credentials where UserID=".$id;
+    $sql2 = "SELECT * FROM credentials where UserID=".$id;
     $result2 = $db->query($sql2);
     if ($result2->num_rows == 1){
         $row2 = $db->fetchRow();
@@ -64,31 +91,32 @@ class Tourist extends User {
 
     }
     else {
+
         $this->email = "";
 		$this->password="";
 
     }
   }
-  
+
   function editUser($email,$password,$mobile){
-      $sql1 = "update credentials set Email='$email',Password='$password' where UserID=$this->id;";
-      $sql2 = "update tourists set Mobile='$mobile' where Id=$this->id;";
+      $sql1 = "UPDATE credentials set Password='$password' where UserID=$this->id;";
+      $sql2 = "UPDATE tourists set Mobile='$mobile' where Id=$this->id;";
         if($this->db->query($sql1) === true){
             if($this->db->query($sql2) === true){
             	echo "updated successfully.";
             	$this->readUser($this->id);
             }
             else{
-            	echo "ERROR: Could not able to execute $sql. " . $conn->error;
+            	echo "ERROR: Could not able to execute $sql2. " . $this->conn->error;
             }
-            
-        } 
+
+        }
         else{
-            echo "ERROR: Could not able to execute $sql. " . $conn->error;
+            echo "ERROR: Could not able to execute $sql1. " . $this->conn->error;
         }
 
   }
-  
+
   function deleteUser(){
 	  $sql1="delete from tourists where Id=$this->id;";
 	  $sql2="delete from credentials where UserID=$this->id;";
@@ -99,10 +127,26 @@ class Tourist extends User {
             else{
             	echo "ERROR: Could not able to execute $sql. " . $conn->error;
             }
-        } 
+        }
       else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
         }
 	}
-	 
+
+  function reservedPackages()
+  {
+    $sql="SELECT p.ID as 'package_id',r.ID as 'reservation_id'
+      FROM packages p INNER JOIN reservations r
+      on(p.ID=r.Package_ID )
+      WHERE r.Tourist_ID=".$_SESSION['ID'];
+
+      $result = $this->db->query($sql);
+      if ($result->num_rows > 0){
+          return $result;
+      }
+      else {
+          return false;
+      }
+  }
+
 }

@@ -6,7 +6,7 @@
 <?php
 class Hotels extends Model {
     private $hotels;
-  
+
   function __construct() {
       $this->fillArray();
   }
@@ -14,10 +14,11 @@ class Hotels extends Model {
     $this->hotels = array();
     $this->db = $this->connect();
     $result = $this->readHotels();
+    if($result!=false)
     while ($row = $result->fetch_assoc()) {
      array_push($this->hotels, new Hotel($row["ID"]));
     }
-    
+
   }
   function getHotels() {
     return $this->hotels;
@@ -33,7 +34,7 @@ class Hotels extends Model {
 
   function readHotels(){
     $sql = "SELECT * FROM hotels";
-    
+
     $result = $this->db->query($sql);
     if ($result->num_rows > 0){
         return $result;
@@ -47,7 +48,7 @@ class Hotels extends Model {
     if($this->db->query($sql) === true){
       echo "Record inserted successfully.";
       $this->fillArray();
-    } 
+    }
     else{
       echo "ERROR: Could not able to execute $sql. " . $conn->error;
     }

@@ -4,14 +4,14 @@
 
 <?php
 class User extends Model {
-  private $id;
-  private $name;
-  private $email;
-	private $password;
-  private $mobile;
+  protected $id;
+  protected $name;
+  protected $email;
+	protected $password;
+  protected $mobile;
 
   function __construct() {
-    
+
   }
 
   function getName() {
@@ -32,7 +32,7 @@ class User extends Model {
   function setPassword($password) {
     $this->password = $password;
   }
-  function getMobile() {
+  public function getMobile() {
     return $this->mobile;
   }
   function setMobile($mobile) {
@@ -40,6 +40,6 @@ class User extends Model {
   }
   function getID() {
     return $this->id;
-  }  
-	 
+  }
+
 }

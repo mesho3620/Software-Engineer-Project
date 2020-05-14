@@ -13,6 +13,7 @@ class Agencies extends Model {
 		$this->agencies = array();
 		$this->db = $this->connect();
 		$result = $this->readAgencies();
+		if($result!=false)
 		while ($row = $result->fetch_assoc()) {
 			array_push($this->agencies, new Agency($row["Id"],$row["Name"],$row["Email"],$row["Password"],$row["Mobile"],$row["Country"],$row["Address"]));
 		}
@@ -57,13 +58,9 @@ class Agencies extends Model {
 		if($this->db->query($sql) === true){
 			echo "Records inserted successfully.";
 			$this->fillArray();
-		} 
+		}
 		else{
 			echo "ERROR: Could not able to execute $sql. " . $conn->error;
 		}
 	}
 }
-
-
-
-

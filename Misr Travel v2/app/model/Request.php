@@ -9,39 +9,36 @@ class Request extends Package {
     private $touristsno;
     private $status;
 
-  function __construct($id) {
-      $this->id = $id;
-	  $this->db = $this->connect();
 
-    //if(""===$name){
+  function __construct($id,$name="",$checkin="",$checkout="",$hotel="",$program="",$price="",$touristsno="",$status="") {
+    $this->id = $id;
+    $this->db = $this->connect();
+
+    if(""===$name){
       $this->readRequest($id);
-    //}else{
-      //$this->name = $name;
-      //$this->agencyId = $agencyId;
-//$this->checkin = $checkin;
-   //   $this->checkout = $checkout;
-//$this->hotel = new Hotel();
-   //   $this->program = $program;
-   //   $this->price = $price;
-   //   $this->touristsno = $touristsno;
-   //   $this->status = $status;
-
-   // ,$agencyId="",$name="",$checkin="",$checkout="",$hotel="",$program="",$price="",$touristsno,$status=""}
+    }else{
+      $this->name = $name;
+      $this->checkin = $checkin;
+      $this->checkout = $checkout;
+      $this->hotel = $hotel;
+      $this->program = $program;
+      $this->price = $price;
+    }
   }
 
-  function getAgencyId() {
+  public function getAgencyId() {
     return $this->agencyId;
   }
   function setAgencyId($agencyId) {
     $this->agencyId = $agencyId;
   }
-  function getStatus() {
+  public function getStatus() {
     return $this->status;
   }
   function setStatus($status) {
     $this->status = $status;
   }
-  function getTouristsNo() {
+  public function getTouristsNo() {
     return $this->touristsno;
   }
   function setTouristsNo($touristsno) {
@@ -49,7 +46,7 @@ class Request extends Package {
   }
 
 
-  function readRequest($id){
+  public function readRequest($id){
     $sql = "SELECT * FROM requests where ID=".$id;
     $db = $this->connect();
     $result = $db->query($sql);
@@ -73,12 +70,12 @@ class Request extends Package {
         $this->checkout = "";
         $this->program = "";
         $this->price = "";
-        $this->hotel = new Hotel();
+        $this->hotel = "";
         $this->touristsno = "";
         $this->status = "";
     }
   }
-  function editRequest($name,$checkin,$checkout,$hotel,$program,$price,$touristsno,$status){
+  public function editRequest($name,$checkin,$checkout,$hotel,$program,$price,$touristsno,$status){
       $sql = "update requests set Name='$name',Checkin='$checkin',Checkout='$checkout',Tourists='$touristsno',Hotel_ID='$hotel->getID()',Program='$program',Price='$price',Status='$status' where ID=$this->id;";
         if($this->db->query($sql) === true){
             echo "updated successfully.";
@@ -88,14 +85,14 @@ class Request extends Package {
         }
 
   }
-  function deleteRequest(){
+  public function deleteRequest(){
     $sql="delete from requests where ID=$this->id;";
     if($this->db->query($sql) === true){
-            echo "deleted successfully.";
+              echo '<script>alert("deleted successfully");</script>';
         } else{
-            echo "ERROR: Could not able to execute $sql. " . $conn->error;
+              echo '<script>alert("ERROR: Could not able to execute $sql ' . $this->db->conn->error.'");</script>' ;
         }
   }
 }
-	
+
 ?>
