@@ -86,10 +86,9 @@ class Package extends Model {
         $this->checkout = "";
         $this->program = "";
         $this->price = "";
-        $this->hotel = "";
     }
   }
-  function editPackage($name,$checkin,$checkout,$hotel,$program,$price){
+  public function editPackage($name,$checkin,$checkout,$hotel,$program,$price){
       $sql = "update packages set Name='$name',Checkin='$checkin',Checkout='$checkout',Hotel_ID='$hotel->getID()',Program='$program',Price='$price' where ID=$this->id;";
         if($this->db->query($sql) === true){
             echo "updated successfully.";
@@ -99,7 +98,7 @@ class Package extends Model {
         }
 
   }
-  function deletePackage(){
+  public function deletePackage(){
     $sql="delete from packages where ID=$this->id;";
     if($this->db->query($sql) === true){
               echo '<script>alert("deleted successfully");</script>';
@@ -108,5 +107,5 @@ class Package extends Model {
         }
   }
 }
-
+	
 ?>

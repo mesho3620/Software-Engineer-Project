@@ -13,10 +13,11 @@ class Tourists extends Model {
 		$this->tourists = array();
 		$this->db = $this->connect();
 		$result = $this->readTourists();
-		if($result!=false)
+		if($result!=false){
 		while ($row = $result->fetch_assoc()) {
 			array_push($this->tourists, new Tourist($row["Id"],$row["Name"],$row["Email"],$row["Password"],$row["Mobile"],$row["Nationality"],$row["PassportNumber"]));
 		}
+	}
 
 	}
 
@@ -24,7 +25,7 @@ class Tourists extends Model {
 		return $this->tourists;
 	}
 
-	function getTourist($touristID) {
+	public function getTourist($touristID) {
 		foreach ($this->tourists as $tourist) {
 	      if ( $touristID == $tourist->getID() ){
 	        return $tourist;
@@ -52,16 +53,20 @@ class Tourists extends Model {
 	    }
 	}*/
 
-	function insertTourist($name,$email,$password,$mobile,$nationality,$passport_number){
+	public function insertTourist($name,$email,$password,$mobile,$nationality,$passport_number){
 		$sql = "INSERT INTO tourists (Name, Mobile, Nationality, PassportNumber) VALUES ('$name','$mobile', '$nationality', '$passport_number');
 				INSERT INTO credentials(Email, Password, Type) VALUES ('$email','$password','T');
 				UPDATE credentials SET UserID=(SELECT Id FROM tourists WHERE Name='$name' AND Mobile='$mobile' AND Nationality='$nationality' AND PassportNumber='$passport_number') WHERE Email='$email';";
 		if($this->db->query($sql) === true){
 			echo "Records inserted successfully.";
 			$this->fillArray();
-		}
+		} 
 		else{
 			echo "ERROR: Could not able to execute $sql. " . $conn->error;
 		}
 	}
 }
+
+
+
+

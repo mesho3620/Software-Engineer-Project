@@ -127,7 +127,27 @@ require_once(__ROOT__ . "model/Reservations.php");
 require_once(__ROOT__ . "model/Hotels.php");
 require_once(__ROOT__ . "controller/StaffController.php");
 require_once(__ROOT__ . "view/ViewStaff.php");
+require_once(__ROOT__ . "model/Exceptions.php");
 
+$conn = new mysqli("localhost", "root", "", "travellingcompany");
+$verify= False;
+
+if(isset($_SESSION))
+{
+	if(!empty($_SESSION['ID'])&&!empty($_SESSION['email'])){
+	$sql="SELECT * FROM credentials WHERE UserID= ".$_SESSION['ID']." AND Email='".$_SESSION['email']."' AND Type='S'";
+	$result = mysqli_query($conn,$sql);
+		if(mysqli_num_rows($result)==1)
+		{
+			$verify= True;
+		}
+	}
+}
+if($verify== False)
+{
+	header("Location:Logout.php");
+
+}
 
 $packagemodel = new Packages();
 $requestmodel = new Requests();
@@ -142,6 +162,115 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 		case 'AddPackages':
 			echo $view->AddPackages();
 			break;
+		case 'addPackageAction':
+
+		$_POST['name']=filter_var($_POST['name'],FILTER_SANITIZE_STRING);
+$_POST['price']=filter_var($_POST['price'],FILTER_SANITIZE_NUMBER_INT);
+$_POST['program']=filter_var($_POST['program'],FILTER_SANITIZE_STRING);
+
+try
+{
+
+if(empty($_POST['name'])||empty($_POST['price'])||empty($_POST['program']))
+{
+	throw new Exception("Data cant be left empty");
+}
+
+if(strlen($_POST['name'])<3||strlen($_POST['name'])>15)
+{
+throw new NameException($_POST['name']);
+}
+
+if($_POST['price']<0||$_POST['name']>999999)
+{
+throw new Exception("invalid price;price must be between 0 and 999999");
+}
+
+if(strlen($_POST['program'])<5||strlen($_POST['program'])>10000)
+{
+throw new Exception("invalid description; description must be between 5 - 10000 character");
+}
+
+$valid=false;
+$valid1=false;
+$today=getDate();
+$chIn=strtotime($_POST['checkin']);
+$chOut=strtotime($_POST['checkout']);
+
+$CIDay=(int)date('d',$chIn);
+$CIMonth=(int)date('m',$chIn);
+$CIYear=(int)date('Y',$chIn);
+
+$CODay=(int)date('d',$chOut);
+$COMonth=(int)date('m',$chOut);
+$COYear=(int)date('Y',$chOut);
+
+if($CIYear>$today['year']&&!$valid)
+{
+	$valid=True;
+}
+else if($CIYear==$today['year']&&!$valid)
+{
+	if($CIMonth>$today['mon']&&!$valid)
+	{
+		$valid=True;
+	}
+	else if($CIMonth==$today['mon']&&!$valid)
+	{
+		if($CIDay>$today['mday']&&!$valid)
+		{
+			$valid=True;
+		}
+		else {
+			{$valid=false;}
+		}
+	}
+
+}
+
+if($COYear>$CIYear&&!$valid1)
+{
+	$valid1=True;
+}
+else if($COYear==$CIYear&&!$valid1)
+{
+	if($COMonth>$CIMonth&&!$valid1)
+	{
+		$valid1=True;
+	}
+	else if($COMonth==$CIMonth&&!$valid1)
+	{
+		if($CODay>$CIDay&&!$valid1)
+		{
+			$valid1=True;
+		}
+		else
+		{$valid1=false;}
+
+	}
+
+}
+
+if($valid==True&&$valid1==True)
+{
+echo $controller->insertPackage();
+echo $view->viewPackages();
+}
+else
+{
+throw new Exception("Invalid Date");
+}
+}//try
+catch(NameException $e)
+{
+	echo "<script>alert('".$e->errorMessage()."')</script>";
+}
+catch(Exception $e)
+{
+	echo "<script>alert('".$e->getMessage()."')</script>";
+}
+
+			break;
 		case 'ViewPackages':
 			echo $view->viewPackages();
 			break;
@@ -150,14 +279,6 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 			break;
 		case 'ViewReservations':
 			echo $view->viewReservations();
-			break;
-		case'addPackageAction':
-			$controller->insertPackage();
-			echo $view->viewPackages();
-			break;
-			case'logout':
-			session_destroy();
-			header("Location:Register.php");
 			break;
 
 }}

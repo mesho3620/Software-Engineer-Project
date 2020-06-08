@@ -12,21 +12,22 @@ class Requests extends Model {
   function __construct() {
       $this->fillArray();
   }
-  function fillArray() {
+  public function fillArray() {
     $this->requests = array();
     $this->db = $this->connect();
     $result = $this->readRequests();
-    if($result!=false)
+    if($result!=false){
     while ($row = $result->fetch_assoc()) {
      array_push($this->requests, new Request($row["ID"]));
     }
+  }
 
   }
-  function getRequests() {
+  public function getRequests() {
     return $this->requests;
   }
 
-  function getRequest($requestID) {
+  public function getRequest($requestID) {
     foreach ($this->requests as $request) {
       if ( $requestID == $request->getID() ){
         return $request;
@@ -34,7 +35,7 @@ class Requests extends Model {
     }
   }
 
-  function readRequests(){
+  public function readRequests(){
     $sql = "SELECT * FROM requests";
 
     $result = $this->db->query($sql);
@@ -45,8 +46,8 @@ class Requests extends Model {
         return false;
     }
   }
-function insertRequest($name,$checkin,$checkout,$hotel,$program,$touristsno/*,$price*/){
-    $sql = "INSERT INTO packages (AgencyID,Name,Checkin,Checkout,Hotel_ID,Program/*,Price*/,Tourists,Status) VALUES ('".$_SESSION['ID']."','$name','$checkin','$checkout','$hotel->getID()','$program','$touristsno','Pending confirmation')";
+  public function insertRequest($name,$checkin,$checkout,$hotelid,$program,$touristsno,$price=0){
+    $sql = "INSERT INTO requests (AgencyID,Name,Checkin,Checkout,Hotel_ID,Program,Price,Tourists,Status) VALUES ('".$_SESSION['ID']."','$name','$checkin','$checkout','$hotelid','$program','$price','$touristsno','Pending confirmation')";
     if($this->db->query($sql) === true){
       echo "Record inserted successfully.";
       $this->fillArray();

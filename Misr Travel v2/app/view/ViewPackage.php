@@ -7,7 +7,7 @@ class ViewPackage extends View{
 	protected $reservationsmodel;
 	protected $packagemodel;
 
-	public function __construct($controller/*,$touristmodel*/,$reservationsmodel,$packagemodel)
+	public function __construct($controller/*,$touristmodel*/,$packagemodel,$reservationsmodel='')
 	{
 
 		$this->controller=$controller;
@@ -82,12 +82,16 @@ class ViewPackage extends View{
 
 						</div>";
 
+						if(!empty($_SESSION['ID']) && $_SESSION["Type"]=="T")
+{
 		foreach ($this->reservationsmodel->getReservations() as $reservation)
 		{
 				if($reservation->getPackage()->getID()==$this->packagemodel->getID() && $reservation->getTouristId()==$_SESSION['ID'])
 				{
-					$reserved=true;
 					$reservationID=$reservation->getID();
+					$reserved=true;
+					$str.='<h3>Reservation ID</h3>';
+					$str.='<p>'.$reservationID.'</p>';
 				}
 		}
 		if($reserved)
@@ -98,6 +102,7 @@ class ViewPackage extends View{
 		{
 			$str.="<form action='Tourist.php?action=book' method='post'><div style='display:none;'><input name='package_ID' value='".$this->packagemodel->getID()."'/></div><div><input type='submit' value='Book' class='btn btn-danger'/></div></div></div></form>";
 		}
+	}
 // $str.='</body>';
 		return $str;
 	}

@@ -1,17 +1,30 @@
-
 <?php
 if(!isset($_SESSION))
    {
        session_start();
    }
-include("css/TopBar.css")
+
 ?>
 
 
 <nav >
   <a class="responsive-menu" href="#"><i class="fa fa-reorder"></i> Menu</a>
   <ul class="menu">
+    <?php
+    if(!empty($_SESSION['ID']) && $_SESSION["Type"]=="T")
+    {
+?>
       <li><a class="active" href="Tourist.php"> HOME</a>
+<?php
+}
+else
+{
+  ?>
+  <li><a class="active" href="index.php"> HOME</a>
+<?php
+}
+ ?>
+
       <li><a  href=""><i class="fa fa-user"></i> ABOUT</a>
         <ul class="sub-menu">
           <li><a href="About Us/WhyMisrTravel.php">Why Misr Travel?</a></li>
@@ -32,22 +45,20 @@ include("css/TopBar.css")
       <li><a href="">Contact Us</a></li>
       <?php
 
-          if(!empty($_SESSION['FullName']) && $_SESSION["Status"]=="Tourist"||1==1)
+          if(!empty($_SESSION['ID']) && $_SESSION["Type"]=="T")
           {
+?>
+              <li><a href='tourist.php?action=viewReserved'>Booked Package</a></li>;
+              <li><a href='tourist.php?action=edit'>Account Settings</a></li>;
+              <li><a href='Logout.php'>Log Out</a></li>;
 
-              echo "<li><a href='tourist.php?action=viewReserved'>Booked Package</a></li>";
-              echo "<li><a href='tourist.php?action=edit'>Account Settings</a></li>";
-              //echo "<li><a href='tourist.php'>Packages</a></li>";
-              echo "<li><a href='tourist.php?action=logOut'>Log Out</a></li>";
-
-
+<?php
 
           }
           else
             {
 
-            echo"<li><a href='#'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>";
-            echo "<li><a href='SignUp.php'>Sign Up</a></li>";
+            echo"<li><a href='register.php'> Login/SignUp</a></li>";
 
             }
 

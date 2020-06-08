@@ -31,7 +31,7 @@ class ViewAgency extends View{
       <br><br><br>
       <a href="logout.php">Log Out   <span class="glyphicon glyphicon-log-out" ></span></a>
       </div>';
-      $this->agencymodel= new Agency($_SESSION['id']);
+      $this->agencymodel= new Agency($_SESSION['ID']);
     }
 
 
@@ -41,7 +41,7 @@ class ViewAgency extends View{
   {
     $this->str='<div class="DataTable" style="overflow:auto;" id="Profile"> <!-- Profile block -->
 		<div class="profile">
-		<form action="Agency.php?action=editProfile" method="post">
+		<form action="Agency.php?action=editProfileAction" method="post">
 		<br><br>
 	    <label class="text"><b>Name</b></label>
 	    <input type="text" value="'.$this->agencymodel->getName().'" name="name" class="box" readonly>
@@ -119,8 +119,7 @@ class ViewAgency extends View{
 
     foreach ($this->requestmodel->getRequests() as $Request)
     {
-      echo"111";
-      if($Request->getAgencyId()==$_SESSION['id'] && $Request->getStatus()!="Done" ){
+      if($Request->getAgencyId()==$_SESSION['ID'] && $Request->getStatus()!="Done" ){
 
         $this->str.='<tr>';
         $this->str.='<td>'.$Request->getID().'</td>';
@@ -160,7 +159,7 @@ class ViewAgency extends View{
 
     foreach ($this->requestmodel->getRequests() as $Request)
     {
-      if($Request->getAgencyId()==$_SESSION['id'] && $Request->getStatus()=="Done" ){
+      if($Request->getAgencyId()==$_SESSION['ID'] && $Request->getStatus()=="Done" ){
 
         $this->str.='<tr>';
         $this->str.='<td>'.$Request->getID().'</td>';

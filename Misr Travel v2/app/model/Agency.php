@@ -7,8 +7,10 @@ class Agency extends User {
   private $country;
   private $address;
 
+  private $sql1;
+  private $sql2;
 
-  function __construct($id,$name="",$email="",$password="",$mobile="",$country="",$address="") {
+  public function __construct($id,$name="",$email="",$password="",$mobile="",$country="",$address="") {
     $this->id = $id;
     $this->db = $this->connect();
 
@@ -23,25 +25,27 @@ class Agency extends User {
 	    $this->country=$country;
       $this->address = $address;
     }
+    $this->sql1="";
+    $this->sql2 = "";
   }
 
-  function getCountry() {
+  public function getCountry() {
     return $this->country;
   }
-  function setCountry($country) {
+  public function setCountry($country) {
     $this->country = $country;
   }
-  function getAddress() {
+  public function getAddress() {
     return $this->address;
   }
-  function setAddress($address) {
+  public function setAddress($address) {
     $this->address = $address;
   }
 
-  function readUser($id){
+  public function readUser($id){
     $db = $this->connect();
-    $sql1 = "SELECT * FROM agencies where Id=".$id;
-    $result1 = $db->query($sql1);
+    $this->sql1 = "SELECT * FROM agencies where Id=".$id;
+    $result1 = $db->query($this->sql1 );
     if ($result1->num_rows == 1){
         $row1 = $db->fetchRow();
         $this->name = $row1["Name"];
@@ -56,8 +60,8 @@ class Agency extends User {
         $this->country = "";
     		$this->address = "";
         }
-    $sql2 = "SELECT * FROM credentials where UserID=".$id;
-    $result2 = $db->query($sql2);
+    $this->sql2 = "SELECT * FROM credentials where UserID=".$id;
+    $result2 = $db->query($this->sql2);
     if ($result2->num_rows == 1){
         $row2 = $db->fetchRow();
         $this->email = $row2["Email"];
@@ -69,39 +73,36 @@ class Agency extends User {
 		    $this->password="";
     }
   }
-
-  function editUser($email,$password,$mobile,$address){
-      $sql1 = "update credentials set Email='$email',Password='$password' where UserID=$this->id;";
-      $sql2 = "update agencies set Mobile='$mobile',Address='$address' where Id=$this->id;";
-        if($this->db->query($sql1) === true){
-            if($this->db->query($sql2) === true){
-            	echo "updated successfully.";
+  public function editUser($email,$password,$mobile,$address){
+      $this->sql1 = "UPDATE credentials set Email='$email',Password='$password' where UserID=$this->id AND Type='A';";
+  $this->sql2 = "UPDATE agencies set Mobile='$mobile',Address='$address' where Id=$this->id;";
+    if($this->db->query($this->sql1) === true){
+            if($this->db->query($this->sql2) === true){
+            	echo '<script>alert("updated successfully");</script>';
             	$this->readUser($this->id);
             }
             else{
-            	echo "ERROR: Could not able to execute $sql. " . $conn->error;
+            	echo '<script>alert("ERROR: Could not able to execute $sql ' . $this->db->conn->error.'");</script>' ;
             }
-
         }
         else{
-            echo "ERROR: Could not able to execute $sql. " . $conn->error;
+            echo '<script>alert("ERROR: Could not able to execute $sql ' . $this->db->conn->error.'");</script>' ;
         }
-
   }
 
-  function deleteUser(){
-	  $sql1="delete from agencies where Id=$this->id;";
-	  $sql2="delete from credentials where UserID=$this->id;";
+  public function deleteUser(){
+	  $this->sql1="delete from agencies where Id=$this->id;";
+	  $this->sql2="delete from credentials where UserID=$this->id;";
 	  if($this->db->query($sql1) === true){
-            if($this->db->query($sql2) === true){
-            	echo "deleted successfully.";
+            if($this->db->query($this->sql2) === true){
+              echo '<script>alert("deleted successfully");</script>';
             }
             else{
-            	echo "ERROR: Could not able to execute $sql. " . $conn->error;
+            	echo '<script>alert("ERROR: Could not able to execute $sql2 ' . $this->db->conn->error.'");</script>' ;
             }
         }
       else{
-            echo "ERROR: Could not able to execute $sql. " . $conn->error;
+           echo '<script>alert("ERROR: Could not able to execute $sql1 ' . $this->db->conn->error.'");</script>' ;
         }
 	}
 

@@ -37,7 +37,7 @@ class Department extends Model {
         $this->name = "";
     }
   }
-  function editDepartment($name){
+  public function editDepartment($name){
       $sql = "update departments set Name='$name' where ID=$this->id;";
         if($this->db->query($sql) === true){
             echo "updated successfully.";
@@ -47,14 +47,14 @@ class Department extends Model {
         }
 
   }
-  function deleteDepartment(){
+  public function deleteDepartment(){
     $sql="delete from departments where ID=$this->id;";
     if($this->db->query($sql) === true){
-            echo "deleted successfully.";
+              echo '<script>alert("deleted successfully");</script>';
         } else{
-            echo "ERROR: Could not able to execute $sql. " . $conn->error;
+              echo '<script>alert("ERROR: Could not able to execute $sql ' . $this->db->conn->error.'");</script>' ;
         }
   }
 }
-	
+
 ?>

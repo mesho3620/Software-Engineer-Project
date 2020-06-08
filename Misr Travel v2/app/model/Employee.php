@@ -18,7 +18,7 @@ class Employee extends User {
       $this->name = $name;
       $this->email = $email;
 	    $this->password=$password;
-      $this->mobile = $mobile;    
+      $this->mobile = $mobile;
 	    $this->departmentId=$departmentId;
     }
   }
@@ -60,9 +60,9 @@ class Employee extends User {
 
     }
   }
-  
-  function editUser($email,$password,$mobile,$departmentId){
-      $sql1 = "update credentials set Email='$email',Password='$password' where UserID=$this->id;";
+
+  public function editUser($email,$password,$mobile,$departmentId){
+      $sql1 = "update credentials set Email='$email',Password='$password' where UserID=$this->id and Type='S';";
       $sql2 = "update staff set Mobile='$mobile',DepartmentId='$departmentId' where Id=$this->id;";
         if($this->db->query($sql1) === true){
             if($this->db->query($sql2) === true){
@@ -72,28 +72,28 @@ class Employee extends User {
             else{
             	echo "ERROR: Could not able to execute $sql. " . $conn->error;
             }
-            
-        } 
+
+        }
         else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
         }
 
   }
-  
-  function deleteUser(){
+
+  public function deleteUser(){
 	  $sql1="delete from staff where Id=$this->id;";
 	  $sql2="delete from credentials where UserID=$this->id;";
 	  if($this->db->query($sql1) === true){
             if($this->db->query($sql2) === true){
-            	echo "deleted successfully.";
+              echo '<script>alert("deleted successfully");</script>';
             }
             else{
-            	echo "ERROR: Could not able to execute $sql. " . $conn->error;
+              echo '<script>alert("ERROR: Could not able to execute $sql ' . $this->db->conn->error.'");</script>' ;
             }
-        } 
+        }
       else{
-            echo "ERROR: Could not able to execute $sql. " . $conn->error;
+              echo '<script>alert("ERROR: Could not able to execute $sql ' . $this->db->conn->error.'");</script>' ;
         }
 	}
-	 
+
 }

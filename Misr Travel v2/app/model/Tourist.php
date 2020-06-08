@@ -15,6 +15,8 @@ class Tourist extends User {
 
     if(""===$name){
       $this->readUser($id);
+      $this->fillArray();
+
     }else{
       $this->name = $name;
       $this->email = $email;
@@ -24,13 +26,13 @@ class Tourist extends User {
       $this->passport_number = $passport_number;
     }
 
-    $this->fillArray();
   }
 
   function fillArray() {
     $this->reservedPackages = array();
     $this->db = $this->connect();
     $result = $this->reservedPackages();
+    if($result!=false)
     while ($row = $result->fetch_assoc()) {
      array_push($this->reservedPackages, [$row["package_id"],$row['reservation_id']]);
     }
@@ -99,7 +101,7 @@ class Tourist extends User {
   }
 
   function editUser($email,$password,$mobile){
-      $sql1 = "UPDATE credentials set Password='$password' where UserID=$this->id;";
+      $sql1 = "UPDATE credentials set Email='$email', Password='$password' where UserID=$this->id and Type='T';";
       $sql2 = "UPDATE tourists set Mobile='$mobile' where Id=$this->id;";
         if($this->db->query($sql1) === true){
             if($this->db->query($sql2) === true){

@@ -3,173 +3,131 @@
 require_once(__ROOT__ . "view/View.php");
 
 class ViewIndex extends View{
+	protected $packagemodel;
+
+	public function __construct($packagemodel)
+	{
+
+		$this->packagemodel=$packagemodel;
+
+	}
 	public function output($ss=""){
 		$str="";
-    $str.=' <body>
-    <div class="rectangle">
-    <div class="sidenav">
-    <img src="img1.png" class="logo">
-    <br><br><br>
-    <a href="index.php?action=Agency">Agency</a>
-    <br><br>
-    <a href="index.php?action=Tourist">Tourist</a>
-    <br><br>
+    $str.='<div id="myCarousel" class="carousel slide" data-ride="carousel">    <!-- carousel -->
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+    </ol>
 
-    </div>
-
-    <div class="row">
-      <div class="column" style="background-color:#aaa;">
-
-   		 <div class="login" style="overflow:auto;">
-       <form action="" method="post">
-         <br>
-         <label class="text"><b>Email</b></label>
-         <br>
-         <br>
-         <input type="text" name="email" class="box" required>
-         <br><br>
-         <label class="text"><b>Password</b></label>
-         <br><br>
-         <input type="password" name="password" class="box" required>
-         <br><br><br>
-         <input type="submit" value="Login" class="button" name="login">
-
-       </form>
-       </div>
-
-    </div>
-
-    <div class="column" style="background-color:#bbb;">
-
-     <div class="signup" style="overflow:auto;">
-
-     <div id="signupform">';
-
-    if($ss=="a")
-    {
-      $str.=$this->signAsAgency();
-    }
-    else {
-      {
-        $str.=$this->signAsTourist();
-      }
-    }
-    $str.='
-    </div>
-
-
-    </div>
-
-  </div>
-
-</div>
-
-
-
-</div>
-</body>';
-		return $str;
-	}
-
-	function signAsTourist(){
-		$str=' <form action="" method="post">
-     <br>
-
-
-     <label class="text"><b>Name</b></label>
-     <input type="text" name="name" class="box" required>
-     <br><br>
-
-     <label class="text"><b>Email</b></label>
-
-     <input type="text" name="email" id="email" class="box" required>
-     <div id="msg"></div>
-     <br><br>
-
-     <label class="text"><b>Password</b></label>
-
-     <input type="password" name="password" class="box" required>
-     <br><br>
-
-     <label class="text"><b>Mobile</b></label>
-     <input type="text" name="mobile" class="box" class="box" required>
-     <br><br>
-
-     <label class="text"><b>Nationality</b></label>
-     <input type="text" name="nationality" class="box" class="box" required>
-     <br><br>
-
-     <label class="text"><b>passport_number</b></label>
-     <input type="text" name="mobile" class="box" class="box" required>
-     <br><br>
-
-
-     <input type="submit" value="Signup" class="button" name="signup" disabled>
-
-
-
-    </form> ';
-		return $str;
-	}
-
-	function signAsAgency(){
-		$str=' <form action="" method="post">
-     <br>
-
-
-     <label class="text"><b>Name</b></label>
-     <input type="text" name="name" class="box" required>
-     <br><br>
-
-     <label class="text"><b>Email</b></label>
-
-     <input type="text" name="email" id="email" class="box" required>
-     <div id="msg"></div>
-     <br><br>
-
-     <label class="text"><b>Password</b></label>
-
-     <input type="password" name="password" class="box" required>
-     <br><br>
-
-     <label class="text"><b>Mobile</b></label>
-     <input type="text" name="mobile" class="box" class="box" required>
-     <br><br>
-
-     <label class="text"><b>Country</b></label>
-     <input type="text" name="country" class="box" class="box" required>
-     <br><br>
-
-     <label class="text"><b>Address</b></label>
-     <input type="text" name="address" class="box" class="box" required>
-     <br><br>
-
-
-     <input type="submit" value="Signup" class="button" name="signup" disabled>
-
-
-
-    </form> ';
-		return $str;
-	}
-
-	public function logIn(){
-		$str=' <form action="#">
-      <h1>Sign in</h1>
-      <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img src="https://placehold.it/1200x400?text=IMAGE" alt="Image">
+        <div class="carousel-caption">
+          <h3>Sell $</h3>
+          <p>Money Money.</p>
+        </div>
       </div>
-      <span>or use your account</span>
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Password" />
-      <a href="#">Forgot your password?</a>
-      <button>Sign In</button>
-    </form> ';
+
+
+      <div class="item">
+        <img src="https://placehold.it/1200x400?text=Another Image Maybe" alt="Image">
+        <div class="carousel-caption">
+          <h3>More Sell $</h3>
+          <p>Lorem ipsum...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+
+
+</div>';
+
+    $str.='<form action="Home.php?search" method="post">												<!-- search form -->
+  <div class="row" style="margin-left:10%;">
+    <div class="column leftCol">
+      <label for="destination">Where To:</label></br></br>
+      <select id="destination" name="destination">
+        <option value="Egypt">Egypt</option>
+        <option value="Jordon">Jordon</option>
+      </select>
+    </div>
+
+    <div class="column Middle">
+      <label for="TripType">Trip Type:</label></br></br>
+      <select id="TripType" name="TripType">
+        <option value="1">Tours & Packages</option>
+        <option value="2">Jordan Tour Packages</option>
+        <option value="3">Jordan Day Tours</option>
+        <option value="4">Multi Country Tours</option>
+        <option value="5">Egypt Nile cruise packages</option>
+        <option value="6">Egypt Day Tours</option>
+        <option value="7">Egypt Shore Excursions</option>
+        <option value="8">Airport Transfers &  Transport</option>
+      </select>
+    </div>
+
+    <div class="column rightCol">
+      <label for="price">price Range:</label></br></br>
+      <select id="price" name="price">
+        <option value="499">Below $500</option>
+        <option value="500-1000">$500 - $1000</option>
+        <option value="1000-1500">1000-1500</option>
+        <option value="1501">Above $1500</option>
+      </select>
+    </div>
+
+    <br><br>
+    <input class="btn-danger" type="submit" style="height:40px;width:80px;">
+  </div>
+</form>';
+
+$str.='<div class="row">
+';
+
+foreach ($this->packagemodel->GetPackages() as $Package)
+{
+
+	$str.='<div class="col-md-4">
+     <div class="thumbnail">
+        <img src="Slideshow/w.jpg" alt="Norway" style="width:100%">
+        <div class="w3-container w3-white">
+          <h3>'.$Package->getName().'</h3>
+					<p style="width: 250px;
+     					overflow: hidden;
+     					white-space: nowrap;
+     					text-overflow: ellipsis;">'.$Package->getProgram().'</p>
+
+          <p>
+					Price:'.$Package->getPrice().'
+					</p>
+
+				<form action="index.php?action=viewPackage" method="post">
+					<div style="display:none;"><input name="SelectedPackage" value="'.$Package->getID().'"/></div>
+					<input type="submit" class="w3-button w3-block w3-black w3-margin-bottom" value="Read More">
+				 </form>
+
+        </div>
+      </div>
+    </div>';
+
+}
+
+$str.='</div>';
+
+
 		return $str;
 	}
-
 
 
 }

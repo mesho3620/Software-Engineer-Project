@@ -25,11 +25,11 @@ class AgencyController{
 		$checkout = $_REQUEST['checkout'];
 		$hotel = $_REQUEST['hotel'];
 		$program = $_REQUEST['program'];
-		$price = $_REQUEST['price'];
+		// $price = $_REQUEST['price'];
 		$touristsno = $_REQUEST['touristsno'];
-		$status = $_REQUEST['status'];
+		// $status = $_REQUEST['status'];
 
-		$this->requestmodel->insertRequest($name,$checkin,$checkout,$hotel,$program,$touristsno,$price);
+	$this->requestmodel->insertRequest($name,$checkin,$checkout,$hotel,$program,$touristsno/*,$price*/);
 	}
 
 	public function editRequest() {

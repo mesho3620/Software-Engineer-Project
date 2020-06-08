@@ -11,35 +11,35 @@ class User extends Model {
   protected $mobile;
 
   function __construct() {
-
+    
   }
 
-  function getName() {
+  public function getName() {
     return $this->name;
   }
-  function setName($name) {
+  public function setName($name) {
     $this->name = $name;
   }
-  function getEmail() {
+  public function getEmail() {
     return $this->email;
   }
-  function setEmail($email) {
+  public function setEmail($email) {
     $this->email = $email;
   }
-  function getPassword() {
+  public function getPassword() {
     return $this->password;
   }
-  function setPassword($password) {
+  public function setPassword($password) {
     $this->password = $password;
   }
   public function getMobile() {
     return $this->mobile;
   }
-  function setMobile($mobile) {
+  public function setMobile($mobile) {
     $this->mobile = $mobile;
   }
-  function getID() {
+  public function getID() {
     return $this->id;
-  }
-
+  }  
+	 
 }

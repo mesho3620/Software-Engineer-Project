@@ -13,9 +13,10 @@ class Agencies extends Model {
 		$this->agencies = array();
 		$this->db = $this->connect();
 		$result = $this->readAgencies();
-		if($result!=false)
+		if($result!=false){
 		while ($row = $result->fetch_assoc()) {
 			array_push($this->agencies, new Agency($row["Id"],$row["Name"],$row["Email"],$row["Password"],$row["Mobile"],$row["Country"],$row["Address"]));
+		}
 		}
 	}
 
@@ -51,16 +52,21 @@ class Agencies extends Model {
 	    }
 	}*/
 
-	function insertAgency($name,$email,$password,$mobile,$country,$address){
+	public function insertAgency($name,$email,$password,$mobile,$country,$address){
 		$sql = "INSERT INTO agencies (Name, Mobile, Country, Address) VALUES ('$name','$mobile', '$country', '$address');
-				INSERT INTO credentials(Email, Password, Type) VALUES ('$email','$password','A');
-				UPDATE credentials SET UserID=(SELECT Id FROM agencies WHERE Name='$name' AND Mobile='$mobile' AND Country='$country' AND Address='$address') WHERE Email='$email';";
+				INSERT INTO credentials(Email, Password, Type,UserID) VALUES ('$email','$password','A',(SELECT Id FROM agencies WHERE Name='$name' AND Mobile='$mobile' AND Country='$country' AND Address='$address') WHERE Email='$email');";
+				// UPDATE credentials SET UserID=(SELECT Id FROM agencies WHERE Name='$name' AND Mobile='$mobile' AND Country='$country' AND Address='$address') WHERE Email='$email';";
+		$checkSql1="SELECT * FROM agencies WHERE Name= $name OR Mobile=$mobile";
+		$checkSql2="SELECT * FROM credentials WHERE Email= $email";
+
 		if($this->db->query($sql) === true){
-			echo "Records inserted successfully.";
+			echo "<script>alert('Records inserted successfully!'')</script>";
 			$this->fillArray();
 		}
 		else{
 			echo "ERROR: Could not able to execute $sql. " . $conn->error;
 		}
-	}
+
+}//end func
+
 }

@@ -7,7 +7,7 @@ class DBh{
 	private $password;
 	private $dbname;
 
-	private $conn;
+	public $conn;
 	private $result;
 	public $sql;
 

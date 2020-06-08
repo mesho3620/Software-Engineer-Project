@@ -150,8 +150,29 @@ require_once(__ROOT__ . "model/Requests.php");
 require_once(__ROOT__ . "model/Hotels.php");
 require_once(__ROOT__ . "controller/AgencyController.php");
 require_once(__ROOT__ . "view/ViewAgency.php");
+require_once(__ROOT__ . "model/Exceptions.php");
 
-$agencymodel = new Agency($_SESSION['id']);
+$conn = new mysqli("localhost", "root", "", "travellingcompany");
+$verify= False;
+
+if(isset($_SESSION))
+{
+	if(!empty($_SESSION['ID'])&&!empty($_SESSION['email'])){
+	$sql="SELECT * FROM credentials WHERE UserID= ".$_SESSION['ID']." AND Email='".$_SESSION['email']."' AND Type='A'";
+	$result = mysqli_query($conn,$sql);
+		if(mysqli_num_rows($result)==1)
+		{
+			$verify= True;
+		}
+	}
+}
+if($verify== False)
+{
+	header("Location:Logout.php");
+
+}
+
+$agencymodel = new Agency($_SESSION['ID']);
 $requestmodel = new Requests();
 $hotelmodel = new Hotels();
 $controller = new AgencyController($requestmodel,$agencymodel);
@@ -180,13 +201,232 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 			echo $view->viewHistory();
 			break;
 		case 'addRequestAction':
-			echo $controller->insertRequest();
-			echo $view->viewRequests();
+
+		$_POST['name']=filter_var($_POST['name'],FILTER_SANITIZE_STRING);
+		$_POST['touristsno']=filter_var($_POST['touristsno'],FILTER_SANITIZE_NUMBER_INT);
+		$_POST['program']=filter_var($_POST['program'],FILTER_SANITIZE_STRING);
+
+		try
+		{
+
+		if(empty($_POST['name'])||empty($_POST['touristsno'])||empty($_POST['program']))
+		{
+			throw new Exception("Data cant be left empty");
+		}
+
+		if(strlen($_POST['name'])<3||strlen($_POST['name'])>15)
+		{
+		throw new NameException($_POST['name']);
+		}
+
+		if($_POST['touristsno']<0||$_POST['touristsno']>200)
+		{
+		throw new Exception("invalid tourists number;must be between 0 and 200");
+		}
+
+		if(strlen($_POST['program'])<5||strlen($_POST['program'])>10000)
+		{
+		throw new Exception("invalid description; description must be between 5 - 10000 character");
+		}
+
+		$valid=false;
+		$valid1=false;
+		$today=getDate();
+		$chIn=strtotime($_POST['checkin']);
+		$chOut=strtotime($_POST['checkout']);
+
+		$CIDay=(int)date('d',$chIn);
+		$CIMonth=(int)date('m',$chIn);
+		$CIYear=(int)date('Y',$chIn);
+
+		$CODay=(int)date('d',$chOut);
+		$COMonth=(int)date('m',$chOut);
+		$COYear=(int)date('Y',$chOut);
+
+		if($CIYear>$today['year']&&!$valid)
+		{
+			$valid=True;
+		}
+		else if($CIYear==$today['year']&&!$valid)
+		{
+			if($CIMonth>$today['mon']&&!$valid)
+			{
+				$valid=True;
+			}
+			else if($CIMonth==$today['mon']&&!$valid)
+			{
+				if($CIDay>$today['mday']&&!$valid)
+				{
+					$valid=True;
+				}
+				else {
+					{$valid=false;}
+				}
+			}
+
+		}
+
+		if($COYear>$CIYear&&!$valid1)
+		{
+			$valid1=True;
+		}
+		else if($COYear==$CIYear&&!$valid1)
+		{
+			if($COMonth>$CIMonth&&!$valid1)
+			{
+				$valid1=True;
+			}
+			else if($COMonth==$CIMonth&&!$valid1)
+			{
+				if($CODay>$CIDay&&!$valid1)
+				{
+					$valid1=True;
+				}
+				else
+				{$valid1=false;}
+
+			}
+
+		}
+
+		if($valid==True&&$valid1==True)
+		{
+		echo $controller->insertRequest();
+		echo $view->viewRequests();
+		}
+		else
+		{
+		throw new Exception("Invalid Date");
+		}
+		}//try
+		catch(NameException $e)
+		{
+			echo "<script>alert('".$e->errorMessage()."')</script>";
+		}
+		catch(Exception $e)
+		{
+			echo "<script>alert('".$e->getMessage()."')</script>";
+		}
+
 			break;
 
 		case 'editProfileAction':
-			echo $controller->editAgency();
-			echo $view->editProfile();
+
+		$_POST['name']=filter_var($_POST['name'], FILTER_SANITIZE_STRING);
+$_POST['email']=filter_var($_POST['email'], FILTER_SANITIZE_STRING);
+$_POST['country']=filter_var($_POST['country'], FILTER_SANITIZE_EMAIL);
+$_POST['address']=filter_var($_POST['address'], FILTER_SANITIZE_STRING);
+
+try
+{
+	if(empty($_POST['name'])||empty($_POST['email'])||empty($_POST['country'])||empty($_POST['address'])||empty($_POST['password'])||empty($_POST['mobile']))
+	{
+		throw new Exception("Data cant be left empty");
+	}
+
+if(strlen($_POST['name'])<3||strlen($_POST['name'])>15)
+{
+throw new NameException($_POST['name']);
+}
+
+if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) 									//***********************************
+{
+	throw new EmailException($_POST['email']);
+}
+
+if(strlen($_POST['country'])<3||strlen($_POST['country'])>20)
+{
+throw new Exception($_POST['country']);
+}
+
+if(strlen($_POST['address'])<5||strlen($_POST['address'])>50)
+{
+throw new Exception($_POST['address']);
+}
+
+if(!preg_match("/^\d{11}$/",$_POST['mobile']))									//***********************************
+{
+
+	throw new Exception("wrong mobile number ");
+
+}
+
+if(!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/",$_POST['password']))
+{
+
+	throw new Exception(" Password must be between 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter");
+
+}
+
+$exists=FALSE;
+$sqlErr=FALSE;
+
+$MobileSql="SELECT * FROM agencies where Id !='".$_SESSION['ID']."' AND Mobile ='".$_POST['mobile']."';";
+$EmailSql="SELECT * FROM credentials where Email ='".$_POST['email']."';";
+
+if($result = mysqli_query($conn,$MobileSql))
+{
+
+	if(mysqli_num_rows($result)>0)
+	{
+
+		$exists=TRUE;
+		throw new Exception("Mobile number already exists");
+
+	}
+}
+else
+{
+
+	$sqlErr=TRUE;
+	throw new SqlException($MobileSql);
+}
+if($result = mysqli_query($conn,$EmailSql))
+{
+
+	if(mysqli_num_rows($result)>0)
+	{
+
+		$exists=TRUE;
+		throw new Exception("Email already exists");
+
+	}
+
+}
+else
+{
+	$sqlErr=TRUE;
+	throw new SqlException($EmailSql);
+}
+echo $controller->editAgency();
+echo $view->editProfile();
+
+}//try
+catch(NameException $e)
+{
+	echo "<script>alert('".$e->errorMessage()."')</script>";
+	echo $view->editProfile();
+
+}
+catch(EmailException $e)
+{
+	echo "<script>alert('".$e->errorMessage()."')</script>";
+	echo $view->editProfile();
+
+}
+catch(SqlException $e)
+{
+	echo "<script>alert('".$e->errorMessage()."')</script>";
+	echo $view->editProfile();
+
+}
+catch(Exception $e)
+{
+	echo "<script>alert('".$e->getMessage()."')</script>";
+	echo $view->editProfile();
+
+}
+
 			break;
 
 		case 'DeleteRequest1':
@@ -197,17 +437,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 			$controller->deleteRequest();
 			header("Location:Agency.php?action=viewHistory");
 			break;
-			case'logout':
-			session_destroy();
-			header("Location:Register.php");
-			break;
 		}
 
-	if(isset($_POST['editProfileAction'])){
-
-		$controller->editAgency();
-		header("Location:Agency.php?action=editProfile");
-	}
 	if(isset($_POST['addRequest'])){
 
 		$controller->insertRequest();

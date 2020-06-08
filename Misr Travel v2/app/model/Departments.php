@@ -14,17 +14,18 @@ class Departments extends Model {
     $this->departments = array();
     $this->db = $this->connect();
     $result = $this->readDepartments();
-    if($result!=false)
+    if($result!=false){
     while ($row = $result->fetch_assoc()) {
      array_push($this->departments, new Department($row["ID"]));
     }
+  }
 
   }
   function getDepartments() {
     return $this->departments;
   }
 
-  function getDepartment($departmentID) {
+  public function getDepartment($departmentID) {
     foreach ($this->departments as $department) {
       if ( $departmentID == $department->getID() ){
         return $department;
@@ -43,7 +44,7 @@ class Departments extends Model {
         return false;
     }
   }
-  function insertDepartment($name){
+  public function insertDepartment($name){
     $sql = "INSERT INTO departments (Name) VALUES ('$name')";
     if($this->db->query($sql) === true){
       echo "Record inserted successfully.";

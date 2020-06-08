@@ -5,6 +5,11 @@
 
 <style type="text/css">
 
+
+
+
+
+
     .login{
       position: relative;
         width: 20%;
@@ -24,14 +29,28 @@
         float: right;
 
     }
+    
 
+    
 
+ 
 </style>
 
-<?php
 
- include "Login.php";
- ?>
+
+
+
+
+
+<?php 
+
+ include "Login.php";?>
+
+
+
+
+
+
 
 <script>
 $(document).ready(function(){
@@ -40,7 +59,7 @@ $(document).ready(function(){
         var email = $("#email").val();
         if(!filter.test(email)){
           $("#msg").html("Please enter valid email").css("color","red");
-          //disableSignup();
+          disableSignup();
         }
 
         else{
@@ -52,7 +71,6 @@ $(document).ready(function(){
             $("#msg").html(data).css("color","red");;
          }
           });
-          //enableSignup();
         }
       });
     });
@@ -66,32 +84,44 @@ $(document).ready(function(){
     }
   });
 }
+
+
+
+
+
 function enableSignup(){
     document.getElementById("signupbutton").disabled = false;
 }
 function disableSignup(){
 document.getElementById("signupbutton").disabled = true;
-
-
-  }
+}
 
  </script>
 
 
+
+
+
+
+
+
+
+
+
 <div class="login">
-  <form action="Login.php" method="post">
+  <form action="" method="post">
     <br>
     <label class="text"><b>Email</b></label>
     <br>
     <br>
-    <input type="text" name="email" class="box" required>
+    <input type="text" name="email1" class="box" required>
     <br><br>
     <label class="text"><b>Password</b></label>
     <br><br>
     <input type="password" name="password" class="box" required>
     <br><br><br>
     <input type="submit" value="Login" class="button" name="login">
-
+    
   </form>
   </div>
 
@@ -114,7 +144,7 @@ document.getElementById("signupbutton").disabled = true;
     <label class="text"><b>Name</b></label>
     <input type="text" name="name" class="box" required>
     <br><br>
-
+ 
     <label class="text"><b>Email</b></label>
 
     <input type="text" name="email" id="email" class="box" required>
@@ -124,7 +154,7 @@ document.getElementById("signupbutton").disabled = true;
     <label class="text"><b>Password</b></label>
 
     <input type="password" name="password" class="box" required>
-    <br><br>
+    <br><br>  
 
     <label class="text"><b>Mobile</b></label>
     <input type="text" name="mobile" class="box" class="box" required>
@@ -137,12 +167,12 @@ document.getElementById("signupbutton").disabled = true;
     <label class="text"><b>passport_number</b></label>
     <input type="text" name="mobile" class="box" class="box" required>
     <br><br>
+ 
 
+    <input type="submit" value="Signup" class="button" name="signup" id="signupbutton" disabled>
+    
 
-    <input type="submit" value="Signup" class="button" name="signup" >
-
-
-
+  
   </form>
   </div>
   </div>

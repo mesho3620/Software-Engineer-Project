@@ -47,7 +47,7 @@ class Hotel extends Model {
     $result = $db->query($sql);
     if ($result->num_rows == 1){
         $row = $db->fetchRow();
-        //$this->city = $row["City"];
+        $this->city = $row["City"];
         $this->location = $row["Location"];
         $this->rating = $row["Rating"];
     }
@@ -57,7 +57,7 @@ class Hotel extends Model {
         $this->rating = "";
     }
   }
-  function editHotel($city,$location,$rating){
+  public function editHotel($city,$location,$rating){
       $sql = "update hotels set City='$city',Location='$location',Rating='$rating' where ID=$this->id;";
         if($this->db->query($sql) === true){
             echo "updated successfully.";
@@ -67,14 +67,14 @@ class Hotel extends Model {
         }
 
   }
-  function deleteHotel(){
+  public function deleteHotel(){
     $sql="delete from hotels where ID=$this->id;";
     if($this->db->query($sql) === true){
-            echo "deleted successfully.";
+              echo '<script>alert("deleted successfully");</script>';
         } else{
-            echo "ERROR: Could not able to execute $sql. " . $conn->error;
+              echo '<script>alert("ERROR: Could not able to execute $sql ' . $this->db->conn->error.'");</script>' ;
         }
   }
 }
-
+	
 ?>

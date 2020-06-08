@@ -16,11 +16,11 @@
       $this->reservations = array();
       $this->db = $this->connect();
       $result = $this->readReservations();
-      if($result!=false)
+      if($result!=false){
       while ($row = $result->fetch_assoc()) {
        array_push($this->reservations, new Reservation($row["ID"]));
       }
-
+      }
     }
     function getReservations() {
       return $this->reservations;
@@ -28,7 +28,7 @@
 
     public function getReservation($reservationID) {
       foreach ($this->reservations as $reservation) {
-        if ( $reservationID == $reservation->getID() ){
+        if( $reservationID == $reservation->getID() ){
           return $reservation;
         }
       }
@@ -45,8 +45,7 @@
       }
     }
     function insertReservation($package_ID){
-      $sessionID=$_SESSION['ID'];
-      $sql = "INSERT INTO reservations (Package_ID,Tourist_ID) VALUES ('$package_ID','$sessionID')";
+      $sql = "INSERT INTO reservations (Package_ID,Tourist_ID) VALUES ('$package_ID','".$_SESSION['ID']."')";
      if($this->db->query($sql) === true){
         echo "Record inserted successfully.";
         $this->fillArray();

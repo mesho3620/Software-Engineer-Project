@@ -34,7 +34,7 @@ class ViewStaff extends View{
 	  <a href="staff.php?action=ViewReservations">View Reservations</a>
 	  <br><br>
 	  <br>
-	  <a href="staff.php?action=logout">Log Out   <span class="glyphicon glyphicon-log-out" ></span></a>
+      <a href="logout.php">Log Out   <span class="glyphicon glyphicon-log-out" ></span></a>
 	  </div>';
 
 	function AddPackages(){
@@ -54,8 +54,6 @@ class ViewStaff extends View{
 		<select name="hotel" class="box" required required>';
 		foreach ($this->hotelmodel->getHotels() as $hotel) {
 		$this->str.='<option value="'.$hotel->getID().'">'.$hotel->getLocation().'</option>';
-		echo $hotel->getID();
-		echo $hotel->getLocation();
 		}
 		$this->str.='<label class="text"><b>Price</b></label>
 	    <input type="text" name="price" class="box1" required>
@@ -72,7 +70,7 @@ class ViewStaff extends View{
 
 	function viewPackages(){
 		$this->str.='<div class="DataTable" style="overflow:auto;">
-			<table class="table table-striped table-hover">
+			<table class="table table-striped table-hover" style="table-layout:fixed;height:100%;">
 			<thead>
 		 <tr>
 			<th>ID</th>

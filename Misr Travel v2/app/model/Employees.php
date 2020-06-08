@@ -13,17 +13,19 @@ class Employees extends Model {
 		$this->employees = array();
 		$this->db = $this->connect();
 		$result = $this->readStaff();
-		if($result!=false)
+		if($result!=false){
 		while ($row = $result->fetch_assoc()) {
 			array_push($this->employees, new Employee($row["Id"],$row["Name"],$row["Email"],$row["Password"],$row["Mobile"],$row["DepartmentId"]));
 		}
 	}
 
+}
+
 	function getStaff() {
 		return $this->employees;
 	}
 
-	function getEmployee($employeeID) {
+	public function getEmployee($employeeID) {
 		foreach ($this->employees as $employee) {
 	      if ( $employeeID == $employee->getID() ){
 	        return $employee;
@@ -51,16 +53,18 @@ class Employees extends Model {
 	    }
 	}*/
 
-	function insertStaff($name,$email,$password,$mobile,$departmentId){
-		$sql = "INSERT INTO staff (Name, Mobile, DepartmentId) VALUES ('$name','$mobile', '$departmentId');
-				INSERT INTO credentials(Email, Password, Type) VALUES ('$email','$password','S');
-				UPDATE credentials SET UserID=(SELECT Id FROM staff WHERE Name='$name' AND Mobile='$mobile' AND DepartmentId='$departmentId' ) WHERE Email='$email';";
-		if($this->db->query($sql) === true){
-			echo "Records inserted successfully.";
+	public function insertStaff($name,$email,$password,$mobile,$departmentId){
+		$sql1 = "INSERT INTO staff (Name, Mobile, DepartmentId) VALUES ('$name','$mobile', '$departmentId');";
+		$sql2 = "INSERT INTO credentials(Email, Password, Type,UserID) VALUES ('$email','$password','S',(SELECT Id FROM staff WHERE Name='$name' AND Mobile='$mobile' AND DepartmentId='$departmentId'));";
+		//$sql3 = "UPDATE credentials SET UserID=(SELECT Id FROM staff WHERE Name='$name' AND Mobile='$mobile' AND DepartmentId='$departmentId' ) WHERE Email='$email';";
+
+	if($this->db->query($sql1) === true && $this->db->query($sql2) === true /*&& $this->db->query($sql3) === true*/){
+            echo '<script>alert("Records inserted successfully.");</script>' ;
 			$this->fillArray();
 		}
+
 		else{
-			echo "ERROR: Could not able to execute $sql. " . $conn->error;
+			echo '<script>alert("ERROR: Could not able to execute $sql1 '.$this->db->conn->error.'");</script>' ;
 		}
 	}
 }
