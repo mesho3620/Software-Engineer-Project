@@ -137,7 +137,7 @@ document.getElementById("signupbutton").disabled = true;
 
   <div id="signupform">
 
-  <form action="" method="post">
+  <form action="signup.php" method="post">
     <br>
 
 
@@ -165,7 +165,7 @@ document.getElementById("signupbutton").disabled = true;
     <br><br>
 
     <label class="text"><b>passport_number</b></label>
-    <input type="text" name="mobile" class="box" class="box" required>
+    <input type="text" name="passport_number" class="box" class="box" required>
     <br><br>
  
 

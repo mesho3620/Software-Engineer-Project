@@ -25,7 +25,7 @@ else
 }
  ?>
 
-      <li><a  href=""><i class="fa fa-user"></i> ABOUT</a>
+      <!-- <li><a  href=""><i class="fa fa-user"></i> ABOUT</a>
         <ul class="sub-menu">
           <li><a href="About Us/WhyMisrTravel.php">Why Misr Travel?</a></li>
           <li><a href="About Us/Terms-Conditions.php">Terms & Conditions</a></li>
@@ -42,7 +42,7 @@ else
         </ul>
       </li>
       <li><a href="">Inquire Now</a></li>
-      <li><a href="">Contact Us</a></li>
+      <li><a href="">Contact Us</a></li> -->
       <?php
 
           if(!empty($_SESSION['ID']) && $_SESSION["Type"]=="T")

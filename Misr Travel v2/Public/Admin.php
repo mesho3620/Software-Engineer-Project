@@ -79,20 +79,15 @@ require_once(__ROOT__ . "controller/AdminController.php");
 require_once(__ROOT__ . "view/ViewAdmin.php");
 require_once(__ROOT__ . "model/Exceptions.php");
 
-$conn = new mysqli("localhost", "root", "", "travellingcompany");
 $verify= False;
 
 if(isset($_SESSION))
 {
-	if(!empty($_SESSION['ID'])&&!empty($_SESSION['email'])){
-	$sql="SELECT * FROM credentials WHERE UserID= ".$_SESSION['ID']." AND Email='".$_SESSION['email']."' AND Type='AD'";
-	$result = mysqli_query($conn,$sql);
-		if(mysqli_num_rows($result)==1)
-		{
+	if(!empty($_SESSION['ID'])&&$_SESSION['Type']=='AD'){
+
 			$verify= True;
 		}
 	}
-}
 if($verify== False)
 {
 	header("Location:Logout.php");
@@ -196,89 +191,12 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 	    throw new Exception("Data cant be left empty");
 	  }
 
-	  if(strlen($_POST['name'])<3||strlen($_POST['name'])>15)
-	{
-
-	  throw new NameException($_POST['name']);
-	}
-
-	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 									//***********************************
-	{
-	  throw new EmailException($email);
-	}
-
-	if(!preg_match("/^\d{11}$/",$_POST['mobile']))									//***********************************
-	{
-
-	  throw new Exception("wrong mobile number ");
-
-	}
-
-	if(!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/",$_POST['password']))
-	{
-
-	  throw new Exception(" Password must be between 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter");
-
-	}
-
-	$exists=FALSE;
-	$sqlErr=FALSE;
-
-	$MobileSql="SELECT * FROM staff where Mobile ='".$_POST['mobile']."';";
-	$EmailSql="SELECT * FROM credentials where Email ='".$_POST['email']."';";
-
-	if($result = mysqli_query($conn,$MobileSql))
-	{
-
-	  if(mysqli_num_rows($result)>0)
-	  {
-
-	    $exists=TRUE;
-	    throw new Exception("Mobile number already exists");
-
-	  }
-	}
-	else
-	{
-
-	  $sqlErr=TRUE;
-	  throw new SqlException($MobileSql);
-	}
-
-	if($result = mysqli_query($conn,$EmailSql))
-	{
-
-	  if(mysqli_num_rows($result)>0)
-	  {
-
-	    $exists=TRUE;
-	    throw new Exception("Email Address already exists");
-
-	  }
-
-	}
-	else
-	{
-	  $sqlErr=TRUE;
-	  throw new SqlException($EmailSql);
-	}
-
 
 	$controller->insertStaff();
+			header("Location:Admin.php?action=ViewStaff");
 
 	} //Try
-	catch(SqlException $e)
-	{
-		echo "<script>alert('".$e->errorMessage()."')</script>";
-	}
-	catch(NameException $e)
-	{
-		echo "<script>alert('".$e->errorMessage()."')</script>";
-	}
-	catch(EmailException $e)
-	{
-		echo "<script>alert('".$e->errorMessage()."')</script>";
-	}
+
 	catch(Exception $e)
 	{
 		echo "<script>alert('".$e->getMessage()."')</script>";
@@ -296,23 +214,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 	 {
 	 	throw new Exception("Data cant be left empty");
 	 }
-	 if(strlen($_POST['city'])<3||strlen($_POST['city'])>15)
-	 {
 
-	 throw new NameException($_POST['city']);
-	 }
-	 if(strlen($_POST['location'])<3||strlen($_POST['location'])>15)
-	 {
-
-	 throw new NameException($_POST['location']);
-	 }
 	 $controller->insertHotel();
 	 header("Location:Admin.php?action=ViewHotels");
 	 }//try
-	 catch(NameException $e)
-	 {
-	 	echo "<script>alert('".$e->errorMessage()."')</script>";
-	 }
+
 	 catch(Exception $e)
 	 {
 	 	echo "<script>alert('".$e->getMessage()."')</script>";
@@ -324,47 +230,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 
 		$_POST['name']=filter_var($_POST['name'],FILTER_SANITIZE_STRING);
 
-		try
-		{
-		 if(empty($_POST['name']))
-		 {
-			 throw new Exception("Data cant be left empty");
-		 }
-		 if(strlen($_POST['name'])<2||strlen($_POST['name'])>15)
-		{
-
-		 throw new NameException($_POST['name']);
-		}
-		$DepartmentNameSql="SELECT * FROM departments where Name ='".$_POST['name']."';";
-		if($result = mysqli_query($conn,$DepartmentNameSql))
-		{
-
-			if(mysqli_num_rows($result)>0)
-			{
-
-				$exists=TRUE;
-				throw new Exception("Department name already exists");
-
-			}
-		}
-		else
-		{
-
-			$sqlErr=TRUE;
-			throw new SqlException($DepartmentNameSql);
-		}
 
 		$controller->insertDepartment();
-		header("Location:Admin.php?action=ViewDepartments");
-	}//Try
-		catch(NameException $e)
-		{
-			echo "<script>alert('".$e->errorMessage()."')</script>";
-		}
-		catch(Exception $e)
-		{
-			echo "<script>alert('".$e->getMessage()."')</script>";
-		}
+		
+			header("Location:Admin.php?action=ViewDepartments");
+
 
 	}
 }

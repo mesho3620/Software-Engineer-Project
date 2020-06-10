@@ -21,7 +21,6 @@ class TouristController{
 
 	public function deleteReservation(){
 		$reservation_ID = $_REQUEST['reservation_ID'];
-echo "zz"."$reservation_ID";
 		$this->reservationmodel->getReservation($reservation_ID)->deleteReservation();
 	}
 public function GetPackages()

@@ -11,7 +11,7 @@ class AdminController{
 	protected $requestmodel;
 	protected $reservationmodel;
 	protected $hotelmodel;
-    
+
     public function __construct($touristmodel,$agencymodel,$staffmodel,$departmentmodel,$packagemodel,$requestmodel,$reservationmodel,$hotelmodel) {
         $this->touristmodel = $touristmodel;
         $this->agencymodel = $agencymodel;
@@ -22,7 +22,7 @@ class AdminController{
         $this->reservationmodel = $reservationmodel;
         $this->hotelmodel = $hotelmodel;
     }
- 
+
 	public function insertHotel() {
 		$city = $_REQUEST['city'];
 		$location = $_REQUEST['location'];
@@ -38,7 +38,7 @@ class AdminController{
 
 		$this->hotelmodel->getHotel($_REQUEST['id'])->editHotel($city,$location,$rating);
 	}
-	
+
 	public function deleteHotel(){
 		$this->hotelmodel->getHotel($_REQUEST['id'])->deleteHotel();
 	}
@@ -54,7 +54,7 @@ class AdminController{
 
 		$this->departmentmodel->getDepartment($_REQUEST['id'])->editDepartment($name);
 	}
-	
+
 	public function deleteDepartment(){
 		$this->departmentmodel->getDepartment($_REQUEST['id'])->deleteDepartment();
 	}
@@ -77,7 +77,7 @@ class AdminController{
 
 		$this->staffmodel->getEmployee($_REQUEST['id'])->editUser($email,$password,$mobile,$departmentId);
 	}
-	
+
 	public function deleteStaff(){
 		$this->staffmodel->getEmployee($_REQUEST['id'])->deleteUser();
 	}
@@ -90,7 +90,7 @@ class AdminController{
 
 		$this->agencymodel->getAgency($_REQUEST['id'])->editUser($email,$password,$mobile,$address);
 	}
-	
+
 	public function deleteAgency(){
 		$this->agencymodel->getAgency($_REQUEST['id'])->deleteUser();
 	}
@@ -102,7 +102,7 @@ class AdminController{
 
 		$this->touristmodel->getTourist($_REQUEST['id'])->editUser($email,$password,$mobile);
 	}
-	
+
 	public function deleteTourist(){
 		$this->touristmodel->getTourist($_REQUEST['id'])->deleteUser();
 	}
@@ -119,7 +119,7 @@ class AdminController{
 
 		$this->requestmodel->getRequest($_REQUEST['id'])->editRequest($name,$checkin,$checkout,$hotel,$program,$price,$touristsno,$status);
 	}
-	
+
 	public function deleteRequest(){
 		$this->requestmodel->getRequest($_REQUEST['id'])->deleteRequest();
 	}
@@ -134,13 +134,13 @@ class AdminController{
 
 		$this->packagemodel->getPackage($_REQUEST['id'])->editPackage($name,$checkin,$checkout,$hotel,$program,$price);
 	}
-	
+
 	public function deletePackage(){
 		$this->packagemodel->getPackage($_REQUEST['id'])->deletePackage();
 	}
-	
+
 	public function deleteReservation(){
-		$this->reservationmodel->getReservation($_REQUEST['id'])->deleteReservation;
+		$this->reservationmodel->getReservation($_REQUEST['id'])->deleteReservation();
 	}
 
 

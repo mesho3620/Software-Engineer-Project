@@ -90,6 +90,8 @@ class ViewStaff extends View{
         $this->str.='<td>'.$Package->getCheckin().'</td>';
         $this->str.='<td>'.$Package->getCheckout().'</td>';
         $this->str.='<td>'.$Package->getPrice().'</td>';
+        $this->str.='<td><a href="Staff.php?action=DeletePackage&id='.$Package->getID().'" class= "btn btn-danger"><span
+        class="glyphicon glyphicon-remove"></span>Delete</a></td>';
         $this->str.='</tr>';
 
       }
@@ -125,6 +127,19 @@ class ViewStaff extends View{
       $this->str.='<td>'.$Request->getCheckout().'</td>';
       $this->str.='<td>'.$Request->getPrice().'</td>';
       $this->str.='<td>'.$Request->getStatus().'</td>';
+      $this->str.='<td></td>';
+
+      if($Request->getStatus()=="Pending confirmation")
+      {
+      $this->str.='<td style="width:10%"><form action="Staff.php?action=AcceptRequest&id='.$Request->getID().'" method="post">
+      <input type="text" pattern=".{2,}" title="must be greater than 9$" name="price" placeholder="price" class="box1" style="width:5%" >
+      <input type="submit" value="Accept" class= "btn btn-success">
+      </form></td>';
+      $this->str.='<td><a href="Staff.php?action=DeleteRequest&id='.$Request->getID().'" class= "btn btn-danger"><span
+      class="glyphicon glyphicon-remove"></span>Delete</a></td>';
+      //$this->str.='<td><a href="Staff.php?action=AcceptRequest&id='.$Request->getID().'" class= "btn btn-danger"><span
+    //  class="glyphicon glyphicon-remove"></span>Delete</a></td>';
+      }
       $this->str.='</tr>';
 
 
@@ -156,6 +171,8 @@ class ViewStaff extends View{
         $this->str.='<td>'.$Reservation->getTouristId().'</td>';
         $this->str.='<td>'.$Reservation->getPackage()->getName().'</td>';
         $this->str.='<td>'.$Reservation->getPackage()->getCheckin().'</td>';
+        $this->str.='<td><a href="Staff.php?action=DeleteReservation&id='.$Reservation->getID().'" class= "btn btn-danger"><span
+        class="glyphicon glyphicon-remove"></span>Delete</a></td>';
         $this->str.='</tr>';
 
       }

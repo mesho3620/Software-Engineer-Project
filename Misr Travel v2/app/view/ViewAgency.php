@@ -19,7 +19,9 @@ class ViewAgency extends View{
         $this->controller = $controller;
         $this->requestmodel = $requestmodel;
         $this->hotelmodel = $hotelmodel;
-        $this->str2.=$_SESSION['Name'].'</h1>
+
+      $this->agencymodel= new Agency($_SESSION['ID']);
+        $this->str2.=$this->agencymodel->getName().'</h1>
       <br><br><br>-
       <a href="Agency.php?action=editProfile">Profile</a>
       <br><br>
@@ -170,7 +172,7 @@ class ViewAgency extends View{
         $this->str.='<td>'.$Request->getPrice().'</td>';
         $this->str.='<td>'.$Request->getStatus().'</td>';
       $this->str.='<td><a href="Agency.php?action=DeleteRequest2&id='.$Request->getID().'" class= "btn btn-danger"><span
-      class="glyphicon glyphicon-remove"></span>Delete</a></td>';
+      class="glyphicon glyphicon-remove"></span>Cancel</a></td>';
         $this->str.='</tr>';
         }
 

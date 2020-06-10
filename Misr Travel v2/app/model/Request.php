@@ -76,8 +76,8 @@ class Request extends Package {
       $this->status = "";
   }
   }
-  public function editRequest($name,$checkin,$checkout,$hotel,$program,$price,$touristsno,$status){
-      $sql = "update requests set Name='$name',Checkin='$checkin',Checkout='$checkout',Tourists='$touristsno',Hotel_ID='$hotel->getID()',Program='$program',Price='$price',Status='$status' where ID=$this->id;";
+  public function editRequest($name,$checkin,$checkout,$program,$price,$touristsno,$status){
+      $sql = "update requests set Name='$name',Checkin='$checkin',Checkout='$checkout',Tourists='$touristsno',Program='$program',Price='$price',Status='$status' where ID=$this->id;";
         if($this->db->query($sql) === true){
             echo "updated successfully.";
             $this->readRequest($this->id);

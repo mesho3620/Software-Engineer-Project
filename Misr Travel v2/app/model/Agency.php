@@ -93,7 +93,7 @@ class Agency extends User {
   public function deleteUser(){
 	  $this->sql1="delete from agencies where Id=$this->id;";
 	  $this->sql2="delete from credentials where UserID=$this->id;";
-	  if($this->db->query($sql1) === true){
+	  if($this->db->query($this->sql1) === true){
             if($this->db->query($this->sql2) === true){
               echo '<script>alert("deleted successfully");</script>';
             }

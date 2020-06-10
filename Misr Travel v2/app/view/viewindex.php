@@ -53,75 +53,62 @@ class ViewIndex extends View{
 
 </div>';
 
-    $str.='<form action="Home.php?search" method="post">												<!-- search form -->
+$hotelLocations=array();
+foreach ($this->packagemodel->GetPackages() as $Package)
+{
+if(!in_array($Package->getHotel()->getLocation(),$hotelLocations))
+{
+	array_push($hotelLocations, $Package->getHotel()->getLocation());
+
+}
+}
+
+
+    $str.='<form action="" method="post">												<!-- search form -->
   <div class="row" style="margin-left:10%;">
     <div class="column leftCol">
       <label for="destination">Where To:</label></br></br>
-      <select id="destination" name="destination">
-        <option value="Egypt">Egypt</option>
-        <option value="Jordon">Jordon</option>
+      <select id="destination" name="destination">';
+			foreach ($hotelLocations as $loc)
+			{
+				$str.='<option value="'.$loc.'">'.$loc.'</option>';
+			}
+			$str.='
       </select>
     </div>
 
-    <div class="column Middle">
-      <label for="TripType">Trip Type:</label></br></br>
-      <select id="TripType" name="TripType">
-        <option value="1">Tours & Packages</option>
-        <option value="2">Jordan Tour Packages</option>
-        <option value="3">Jordan Day Tours</option>
-        <option value="4">Multi Country Tours</option>
-        <option value="5">Egypt Nile cruise packages</option>
-        <option value="6">Egypt Day Tours</option>
-        <option value="7">Egypt Shore Excursions</option>
-        <option value="8">Airport Transfers &  Transport</option>
-      </select>
-    </div>
 
     <div class="column rightCol">
       <label for="price">price Range:</label></br></br>
       <select id="price" name="price">
-        <option value="499">Below $500</option>
-        <option value="500-1000">$500 - $1000</option>
-        <option value="1000-1500">1000-1500</option>
-        <option value="1501">Above $1500</option>
+			<option value="" disabled selected>Price range</option>
+        <option value="1">Below $500</option>
+        <option value="2">$500 - $1000</option>
+        <option value="3">1000-1500</option>
+        <option value="4">Above $1500</option>
       </select>
     </div>
 
     <br><br>
-    <input class="btn-danger" type="submit" style="height:40px;width:80px;">
+    <input class="btn-danger" name="searchSubmit" type="submit" style="height:40px;width:80px;">
   </div>
 </form>';
 
-$str.='<div class="row">
-';
+$str.='<div class="row">';
 
-foreach ($this->packagemodel->GetPackages() as $Package)
+if(isset($_POST['searchSubmit']) && isset($_POST['price']))
 {
-
-	$str.='<div class="col-md-4">
-     <div class="thumbnail">
-        <img src="Slideshow/w.jpg" alt="Norway" style="width:100%">
-        <div class="w3-container w3-white">
-          <h3>'.$Package->getName().'</h3>
-					<p style="width: 250px;
-     					overflow: hidden;
-     					white-space: nowrap;
-     					text-overflow: ellipsis;">'.$Package->getProgram().'</p>
-
-          <p>
-					Price:'.$Package->getPrice().'
-					</p>
-
-				<form action="index.php?action=viewPackage" method="post">
-					<div style="display:none;"><input name="SelectedPackage" value="'.$Package->getID().'"/></div>
-					<input type="submit" class="w3-button w3-block w3-black w3-margin-bottom" value="Read More">
-				 </form>
-
-        </div>
-      </div>
-    </div>';
-
+	$str.=$this->view2();
 }
+else
+{
+	$str.=$this->view1();
+}
+
+
+
+
+
 
 $str.='</div>';
 
@@ -129,6 +116,107 @@ $str.='</div>';
 		return $str;
 	}
 
+	public function view1()
+	{
+		$str1="";
+		foreach ($this->packagemodel->GetPackages() as $Package)
+		{
+
+			$str1.='<div class="col-md-4">
+				 <div class="thumbnail">
+						<img src="Slideshow/w.jpg" alt="Norway" style="width:100%">
+						<div class="w3-container w3-white">
+							<h3>'.$Package->getName().'</h3>
+							<p style="width: 250px;
+									overflow: hidden;
+									white-space: nowrap;
+									text-overflow: ellipsis;">'.$Package->getProgram().'</p>
+
+							<p>
+							Price:'.$Package->getPrice().'
+							</p>
+
+						<form action="index.php?action=viewPackage" method="post">
+							<div style="display:none;"><input name="SelectedPackage" value="'.$Package->getID().'"/></div>
+							<input type="submit" class="w3-button w3-block w3-black w3-margin-bottom" value="Read More">
+						 </form>
+
+						</div>
+					</div>
+				</div>';
+		}
+		return $str1;
+	}
+
+	public function view2()
+	{
+		$str2='';
+	$dest=$_POST['destination'];
+	$price_val=$_POST['price'];
+	$key=false;
+		foreach ($this->packagemodel->GetPackages() as $Package)
+		{
+			$key=false;
+			if($Package->getHotel()->getLocation()==$dest)
+			{
+				switch($price_val)
+				{
+					case'1':
+					if($Package->getPrice()<500)
+					{
+						$key=true;
+					}
+					break;
+					case'2':
+					if($Package->getPrice()>=500 && $Package->getPrice()<1000)
+					{
+						$key=true;
+					}
+					break;
+					case'3':
+					if($Package->getPrice()>=1000 && $Package->getPrice()<1500)
+					{
+						$key=true;
+					}
+					break;
+					case'4':
+					if($Package->getPrice()>=1500)
+					{
+						$key=true;
+					}
+				}
+				if($key==true)
+				{
+					$str2.='<div class="col-md-4">
+						 <div class="thumbnail">
+								<img src="Slideshow/w.jpg" alt="Norway" style="width:100%">
+								<div class="w3-container w3-white">
+									<h3>'.$Package->getName().'</h3>
+									<p style="width: 250px;
+											overflow: hidden;
+											white-space: nowrap;
+											text-overflow: ellipsis;">'.$Package->getProgram().'</p>
+
+									<p>
+									Price:'.$Package->getPrice().'
+									</p>
+
+								<form action="index.php?action=viewPackage" method="post">
+									<div style="display:none;"><input name="SelectedPackage" value="'.$Package->getID().'"/></div>
+									<input type="submit" class="w3-button w3-block w3-black w3-margin-bottom" value="Read More">
+								 </form>
+
+								</div>
+							</div>
+						</div>';
+				}
+			}
+
+
+
+		}
+		return $str2;
+	}
 
 }
 ?>

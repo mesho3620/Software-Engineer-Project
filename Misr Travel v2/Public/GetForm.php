@@ -2,7 +2,7 @@
       
       switch($_POST["Type"]){
         case 'T':
-          echo '<form action="" method="post">
+          echo '<form action="signup.php" method="post">
     <br>
 
 
@@ -30,7 +30,7 @@
     <br><br>
 
     <label class="text"><b>passport_number</b></label>
-    <input type="text" name="mobile" class="box" class="box" required>
+    <input type="text" name="passport_number" class="box" class="box" required>
     <br><br>
  
 
@@ -74,7 +74,7 @@ $(document).ready(function(){
   </script>';
           break;
         case 'A':
-          echo '<form action="" method="post">
+          echo '<form action="signup.php" method="post">
     <br>
 
 

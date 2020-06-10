@@ -54,15 +54,19 @@ class Tourists extends Model {
 	}*/
 
 	public function insertTourist($name,$email,$password,$mobile,$nationality,$passport_number){
-		$sql = "INSERT INTO tourists (Name, Mobile, Nationality, PassportNumber) VALUES ('$name','$mobile', '$nationality', '$passport_number');
-				INSERT INTO credentials(Email, Password, Type) VALUES ('$email','$password','T');
-				UPDATE credentials SET UserID=(SELECT Id FROM tourists WHERE Name='$name' AND Mobile='$mobile' AND Nationality='$nationality' AND PassportNumber='$passport_number') WHERE Email='$email';";
-		if($this->db->query($sql) === true){
-			echo "Records inserted successfully.";
+		
+		$sql1 = "INSERT INTO tourists (Name, Mobile, Nationality, PassportNumber) VALUES ('$name','$mobile', '$nationality', '$passport_number');
+				";
+		$sql2 = "INSERT INTO credentials(Email, Password, Type,UserID) VALUES ('$email','$password','T',(SELECT Id FROM tourists WHERE Name='$name' AND Mobile='$mobile' AND Nationality='$nationality' AND PassportNumber='$passport_number'));";
+		//$sql3 = "UPDATE credentials SET UserID=(SELECT Id FROM staff WHERE Name='$name' AND Mobile='$mobile' AND DepartmentId='$departmentId' ) WHERE Email='$email';";
+
+
+		if($this->db->query($sql1) === true && $this->db->query($sql2) === true /*&& $this->db->query($sql3) === true*/){
 			$this->fillArray();
+			header("Location:register.php?status=success");
 		} 
 		else{
-			echo "ERROR: Could not able to execute $sql. " . $conn->error;
+			header("Location:register.php?status=failed");
 		}
 	}
 }

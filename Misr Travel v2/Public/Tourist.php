@@ -17,20 +17,15 @@ include("js/viewPackage.php");
 
 
 
-$conn = new mysqli("localhost", "root", "", "travellingcompany");
 $verify= False;
 
 if(isset($_SESSION))
 {
-	if(!empty($_SESSION['ID'])&&!empty($_SESSION['email'])){
-	$sql="SELECT * FROM credentials WHERE UserID= ".$_SESSION['ID']." AND Email='".$_SESSION['email']."' AND Type='T'";
-	$result = mysqli_query($conn,$sql);
-		if(mysqli_num_rows($result)==1)
-		{
+	if(!empty($_SESSION['ID'])&&$_SESSION['Type']=='T'){
+
 			$verify= True;
 		}
 	}
-}
 if($verify== False)
 {
 	header("Location:Logout.php");
@@ -75,65 +70,6 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 				throw new Exception("Data cant be left empty");
 			}
 
-			if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) 									//***********************************
-		{
-			throw new EmailException($_POST['email']);
-		}
-
-		if(!preg_match("/^\d{11}$/",$_POST['mobile']))									//***********************************
-		{
-
-			throw new Exception("wrong mobile number ");
-
-		}
-
-		if(!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/",$_POST['password']))
-		{
-
-			throw new Exception(" Password must be between 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter");
-
-		}
-
-		$exists=FALSE;
-		$sqlErr=FALSE;
-
-		$MobileSql="SELECT * FROM tourists where Id !='".$_SESSION['ID']."' AND Mobile ='".$_POST['mobile']."';";
-		$EmailSql="SELECT * FROM credentials where Email ='".$_POST['email']."';";
-
-		if($result = mysqli_query($conn,$MobileSql))
-		{
-
-			if(mysqli_num_rows($result)>0)
-			{
-
-				$exists=TRUE;
-				throw new Exception("Mobile number already exists");
-
-			}
-		}
-		else
-		{
-
-			$sqlErr=TRUE;
-			throw new SqlException($MobileSql);
-		}
-		if($result = mysqli_query($conn,$EmailSql))
-		{
-
-			if(mysqli_num_rows($result)>0)
-			{
-
-				$exists=TRUE;
-				throw new Exception("Email already exists");
-
-			}
-
-		}
-		else
-		{
-			$sqlErr=TRUE;
-			throw new SqlException($EmailSql);
-		}
 
 		$controller->editProfile();
 		$_SESSION['email']=$_POST['email'];
@@ -141,18 +77,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 
 		}//try
 
-		catch(EmailException $e)
-		{
-			echo "<script>alert('".$e->errorMessage()."')</script>";
-			echo $view->editProfile();
 
-		}
-		catch(SqlException $e)
-		{
-			echo "<script>alert('".$e->errorMessage()."')</script>";
-			echo $view->editProfile();
-
-		}
 		catch(Exception $e)
 		{
 			echo "<script>alert('".$e->getMessage()."')</script>";

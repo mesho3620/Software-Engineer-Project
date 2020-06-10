@@ -95,7 +95,7 @@
 	}
 	.box2{
 		font-size: 120%;
-		width: 80%;
+		width: 60%;
 		height: 50%;
 		position: relative;
 		left: 8%;
@@ -129,20 +129,15 @@ require_once(__ROOT__ . "controller/StaffController.php");
 require_once(__ROOT__ . "view/ViewStaff.php");
 require_once(__ROOT__ . "model/Exceptions.php");
 
-$conn = new mysqli("localhost", "root", "", "travellingcompany");
 $verify= False;
 
 if(isset($_SESSION))
 {
-	if(!empty($_SESSION['ID'])&&!empty($_SESSION['email'])){
-	$sql="SELECT * FROM credentials WHERE UserID= ".$_SESSION['ID']." AND Email='".$_SESSION['email']."' AND Type='S'";
-	$result = mysqli_query($conn,$sql);
-		if(mysqli_num_rows($result)==1)
-		{
+	if(!empty($_SESSION['ID'])&&$_SESSION['Type']=='S'){
+
 			$verify= True;
 		}
 	}
-}
 if($verify== False)
 {
 	header("Location:Logout.php");
@@ -176,94 +171,8 @@ if(empty($_POST['name'])||empty($_POST['price'])||empty($_POST['program']))
 	throw new Exception("Data cant be left empty");
 }
 
-if(strlen($_POST['name'])<3||strlen($_POST['name'])>15)
-{
-throw new NameException($_POST['name']);
-}
-
-if($_POST['price']<0||$_POST['name']>999999)
-{
-throw new Exception("invalid price;price must be between 0 and 999999");
-}
-
-if(strlen($_POST['program'])<5||strlen($_POST['program'])>10000)
-{
-throw new Exception("invalid description; description must be between 5 - 10000 character");
-}
-
-$valid=false;
-$valid1=false;
-$today=getDate();
-$chIn=strtotime($_POST['checkin']);
-$chOut=strtotime($_POST['checkout']);
-
-$CIDay=(int)date('d',$chIn);
-$CIMonth=(int)date('m',$chIn);
-$CIYear=(int)date('Y',$chIn);
-
-$CODay=(int)date('d',$chOut);
-$COMonth=(int)date('m',$chOut);
-$COYear=(int)date('Y',$chOut);
-
-if($CIYear>$today['year']&&!$valid)
-{
-	$valid=True;
-}
-else if($CIYear==$today['year']&&!$valid)
-{
-	if($CIMonth>$today['mon']&&!$valid)
-	{
-		$valid=True;
-	}
-	else if($CIMonth==$today['mon']&&!$valid)
-	{
-		if($CIDay>$today['mday']&&!$valid)
-		{
-			$valid=True;
-		}
-		else {
-			{$valid=false;}
-		}
-	}
-
-}
-
-if($COYear>$CIYear&&!$valid1)
-{
-	$valid1=True;
-}
-else if($COYear==$CIYear&&!$valid1)
-{
-	if($COMonth>$CIMonth&&!$valid1)
-	{
-		$valid1=True;
-	}
-	else if($COMonth==$CIMonth&&!$valid1)
-	{
-		if($CODay>$CIDay&&!$valid1)
-		{
-			$valid1=True;
-		}
-		else
-		{$valid1=false;}
-
-	}
-
-}
-
-if($valid==True&&$valid1==True)
-{
 echo $controller->insertPackage();
 echo $view->viewPackages();
-}
-else
-{
-throw new Exception("Invalid Date");
-}
-}//try
-catch(NameException $e)
-{
-	echo "<script>alert('".$e->errorMessage()."')</script>";
 }
 catch(Exception $e)
 {
@@ -279,6 +188,22 @@ catch(Exception $e)
 			break;
 		case 'ViewReservations':
 			echo $view->viewReservations();
+			break;
+		case 'DeleteReservation':
+			$controller->deleteReservation();
+			header("Location:Staff.php?action=ViewReservations");
+			break;
+		case 'DeletePackage':
+			$controller->deletePackage();
+			header("Location:Staff.php?action=ViewPackages");
+			break;
+		case 'DeleteRequest':
+			$controller->deleteRequest();
+			header("Location:Staff.php?action=ViewRequests");
+			break;
+		case 'AcceptRequest':
+			$controller->editRequest();
+			header("Location:Staff.php?action=ViewRequests");
 			break;
 
 }}

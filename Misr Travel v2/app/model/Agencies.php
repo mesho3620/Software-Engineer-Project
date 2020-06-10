@@ -53,18 +53,17 @@ class Agencies extends Model {
 	}*/
 
 	public function insertAgency($name,$email,$password,$mobile,$country,$address){
-		$sql = "INSERT INTO agencies (Name, Mobile, Country, Address) VALUES ('$name','$mobile', '$country', '$address');
-				INSERT INTO credentials(Email, Password, Type,UserID) VALUES ('$email','$password','A',(SELECT Id FROM agencies WHERE Name='$name' AND Mobile='$mobile' AND Country='$country' AND Address='$address') WHERE Email='$email');";
-				// UPDATE credentials SET UserID=(SELECT Id FROM agencies WHERE Name='$name' AND Mobile='$mobile' AND Country='$country' AND Address='$address') WHERE Email='$email';";
-		$checkSql1="SELECT * FROM agencies WHERE Name= $name OR Mobile=$mobile";
-		$checkSql2="SELECT * FROM credentials WHERE Email= $email";
 
-		if($this->db->query($sql) === true){
-			echo "<script>alert('Records inserted successfully!'')</script>";
+
+		$sql1 = "INSERT INTO agencies (Name, Mobile, Country, Address) VALUES ('$name','$mobile', '$country', '$address');";
+		$sql2 = "INSERT INTO credentials(Email, Password, Type,UserID) VALUES ('$email','$password','A',(SELECT Id FROM agencies WHERE Name='$name' AND Mobile='$mobile' AND Country='$country' AND Address='$address'));";
+		if($this->db->query($sql1) === true && $this->db->query($sql2) === true /*&& $this->db->query($sql3) === true*/){
 			$this->fillArray();
-		}
+			header("Location:register.php?status=success");
+		} 
 		else{
-			echo "ERROR: Could not able to execute $sql. " . $conn->error;
+			echo $sql2;
+			//header("Location:register.php?status=failed");
 		}
 
 }//end func
