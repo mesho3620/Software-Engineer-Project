@@ -25,8 +25,9 @@ if(isset($_POST['signup'])){ //check if login button is pressed
 
 
       if(isset($_POST['nationality'])){
-        
+
         $touristmodel = new Tourists();
+        $_POST['password']=sha1($_POST['password']);
         $touristmodel->insertTourist($_POST['name'],$_POST['email'],$_POST['password'],$_POST['mobile'],$_POST['nationality'],$_POST['passport_number']);
       }
 

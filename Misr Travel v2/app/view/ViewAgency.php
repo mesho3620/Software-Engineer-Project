@@ -52,7 +52,7 @@ class ViewAgency extends View{
 		<input type="text" value="'.$this->agencymodel->getEmail().'" name="email" class="box">
 		<br><br><br><br>
       <label class="text"><b>Password</b></label>
-    <input type="text" value="'.$this->agencymodel->getPassword().'" name="password" class="box">
+    <input type="text"  pattern=".{1,}" title="Please fill the password section" name="password" class="box">
     <br><br><br><br>
 	    <label class="text"><b>Mobile</b></label>
 	    <input type="text" value="'.$this->agencymodel->getMobile().'" name="mobile" class="box" >

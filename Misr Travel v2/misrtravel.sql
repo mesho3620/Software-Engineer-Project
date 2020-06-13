@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2020 at 03:33 AM
+-- Generation Time: Jun 13, 2020 at 09:59 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -325,12 +325,12 @@ CREATE TABLE `credentials` (
 --
 
 INSERT INTO `credentials` (`Email`, `Password`, `UserID`, `Type`) VALUES
-('admin@gmail.com', '123', 1, 'AD'),
-('agency@gmail.com', '123', 9, 'A'),
-('mahmoud@gmail.com', '123', 1, 'T'),
-('staff@gmail.com', '123', 9, 'S'),
-('tourist4@gmail.com', '213', 4, 'T'),
-('tourist@gmail.com', '123', 3, 'T');
+('admin@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 'AD'),
+('agency@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 9, 'A'),
+('mahmoud@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 'T'),
+('staff@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 9, 'S'),
+('tourist4@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 4, 'T'),
+('tourist@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 3, 'T');
 
 -- --------------------------------------------------------
 
@@ -349,7 +349,7 @@ CREATE TABLE `departments` (
 
 INSERT INTO `departments` (`ID`, `Name`) VALUES
 (12, 'Europe'),
-(15, 'MENA');
+(16, 'MENA');
 
 -- --------------------------------------------------------
 
@@ -682,7 +682,7 @@ CREATE TABLE `requests` (
 --
 
 INSERT INTO `requests` (`ID`, `AgencyID`, `Name`, `Checkin`, `Checkout`, `Hotel_ID`, `Price`, `Program`, `Tourists`, `Status`) VALUES
-(1, 9, 'cairo2', '2020-06-17', '2020-06-24', 1, 0, 'mmmmmm', 20, 'Pending confirmation'),
+(1, 9, 'cairo2', '2020-06-17', '2020-06-24', 1, 35, 'mmmmmm', 20, 'Done'),
 (2, 9, 'ccc', '2020-06-07', '2020-06-15', 1, 33, 'bb', 22, 'Done'),
 (3, 9, 'nada', '2020-06-12', '2020-06-18', 1, 22, 'nn', 33, 'Done'),
 (16, 9, 'test', '2020-06-11', '2020-06-17', 4, 10, '6 Days', 44, 'Done'),
@@ -706,7 +706,8 @@ CREATE TABLE `reservations` (
 
 INSERT INTO `reservations` (`ID`, `Package_ID`, `Tourist_ID`) VALUES
 (2, 1, 1),
-(13, 7, 3);
+(14, 7, 3),
+(15, 23, 3);
 
 -- --------------------------------------------------------
 
@@ -962,7 +963,7 @@ ALTER TABLE `app_countries`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `hotels`
@@ -1022,7 +1023,7 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `staff`
@@ -1034,7 +1035,7 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT for table `tourists`
 --
 ALTER TABLE `tourists`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables

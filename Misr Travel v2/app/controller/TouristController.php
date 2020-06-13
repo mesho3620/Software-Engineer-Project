@@ -34,6 +34,8 @@ public function editProfile()
 	$email=$_REQUEST['email'];
 	$mobile=$_REQUEST['mobile'];
 	$password=$_REQUEST['password'];
+	$password=sha1($password);
+
 	$this->touristmodel->editUser($email,$password,$mobile);
 }
 

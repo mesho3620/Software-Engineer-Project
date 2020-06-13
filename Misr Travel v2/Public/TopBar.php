@@ -1,7 +1,7 @@
 <?php
 if(!isset($_SESSION))
    {
-       session_start();
+    //   session_start();
    }
 
 ?>
@@ -25,24 +25,14 @@ else
 }
  ?>
 
-      <!-- <li><a  href=""><i class="fa fa-user"></i> ABOUT</a>
+      <li><a  href=""><i class="fa fa-user"></i> ABOUT</a>
         <ul class="sub-menu">
-          <li><a href="About Us/WhyMisrTravel.php">Why Misr Travel?</a></li>
-          <li><a href="About Us/Terms-Conditions.php">Terms & Conditions</a></li>
-          <li><a href="About Us/Chairman-Message.php">Chairman Message</a></li>
-          <li><a href="About Us/">11Our Blogs</a></li>
-          <li><a href="About Us/National-Evaluation-Conference.php">National Evaluation Conference</a></li>
-          <li><a href="About Us/Tips.php">Gratuities</a></li>
-          <li><a href="About Us/Our-Story.php">Our Story</a></li>
-          <li><a href="About Us/Misr-Travel-Program.php">Travel Programs</a></li>
-          <li><a href="About Us/MICE.php">M.I.C.E & Travel Management</a></li>
-          <li><a href="About Us/Our-Team.php">Our Team</a></li>/
-          <li><a href="About Us/Talk-To-Us.php">Talk To Us</a></li>
-          <li><a href="About Us/FAQ.php">FAQs</a></li>
+          <li><a href="WhyMisrTravel.php">Why Misr Travel?</a></li>
+          <li><a href="Our-Story.php">Our Story</a></li>
+          <li><a href="FAQ.php">FAQs</a></li>
         </ul>
       </li>
-      <li><a href="">Inquire Now</a></li>
-      <li><a href="">Contact Us</a></li> -->
+      <li><a href="Talk-To-Us.php">Contact Us</a></li>
       <?php
 
           if(!empty($_SESSION['ID']) && $_SESSION["Type"]=="T")

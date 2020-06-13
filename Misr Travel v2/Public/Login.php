@@ -19,7 +19,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if(isset($_POST['login'])){ //check if login button is pressed
 
 
-
+$_POST['password']=sha1($_POST['password']);
     $sql = "select * from credentials where Email = '".$_POST['email1']."'";
     $result = mysqli_query($conn,$sql)
      or die("failed  to query database".mysqli_error());

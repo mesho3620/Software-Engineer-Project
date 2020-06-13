@@ -15,6 +15,7 @@ class AgencyController{
 		$password = $_REQUEST['password'];
 		$mobile = $_REQUEST['mobile'];
 		$address = $_REQUEST['address'];
+		$password=sha1($password);
 
 		$this->agencymodel->editUser($email,$password,$mobile,$address);
 	}

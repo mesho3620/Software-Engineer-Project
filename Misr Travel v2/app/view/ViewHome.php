@@ -281,7 +281,7 @@ public function editProfile()
 	    <br><br><br><br>
 
 			<label class="text"><b>Password</b></label>
-			<input type="password" value="'.$this->touristmodel->getPassword().'" name="password" class="box">
+			<input type="password" pattern=".{1,}" title="Please fill the password section" name="password" class="box">
 			<br><br><br><br>
 
 	    <input type="submit" value="Save" class="btn btn-info" name="save" id="save">
